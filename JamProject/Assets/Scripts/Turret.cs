@@ -36,6 +36,7 @@ public class Turret : MonoBehaviour {
 
     public void Shoot(GameObject go)
     {
+        ChangeAngle(angle);
         GameObject bullet_go_tmp = Instantiate(go, transform.position + transform.right, Quaternion.identity);
         Bullet bullet_tmp = bullet_go_tmp.GetComponent<Bullet>();
         bullet_tmp.max_power = max_bullet_power;
@@ -44,12 +45,13 @@ public class Turret : MonoBehaviour {
 
     void ChangeAngle(float new_angle)
     {
-        new_angle = angle;
+        angle  = new_angle;
+        float ang_tmp = Random.Range(-angle,  angle);
         direction = transform.right;
         Vector3 new_dir = direction;
-        angle *= Mathf.Deg2Rad;
-        float cos = Mathf.Cos(angle);
-        float sin = Mathf.Sin(angle);
+        ang_tmp *= Mathf.Deg2Rad;
+        float cos = Mathf.Cos(ang_tmp);
+        float sin = Mathf.Sin(ang_tmp);
         new_dir.x = direction.x * cos - direction.y * sin;
         new_dir.y = -direction.x * sin + direction.y * cos;
         direction = new_dir;

@@ -8,11 +8,12 @@ public class Bullet : MonoBehaviour {
     public int max_velocity;
     public int max_power = 1;
     public Color current_color = Color.white;
-
+    float time_inside_wall = 0f;
     //Private variables
     Vector3 velocity = Vector3.up;
     int current_rebounds = 0;
     SpriteRenderer current_sprite;
+    
 
     private void Start()
     {
@@ -24,7 +25,6 @@ public class Bullet : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
         if (velocity.magnitude != max_velocity)
         {
             velocity.Normalize();
@@ -49,6 +49,17 @@ public class Bullet : MonoBehaviour {
                 velocity = Vector3.Reflect(velocity, contact.normal);
                 current_rebounds++;
             }
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            if (time_inside_wall > 0.25f)
+                Destroy(gameObject);
+            else
+                time_inside_wall += Time.deltaTime;
         }
     }
 
