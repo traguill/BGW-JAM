@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public float hit_dmg = 10.0f;
     public float max_mov_increase = 5.0f;
     public float stunned_duration = 2.0f;
+    public float super_extasi_pc = 90.0f;
 
     [Header("Debugging")]
     public float death_bar = 0.0f;
@@ -45,6 +46,9 @@ public class Player : MonoBehaviour
     Bullet bullet_holded = null;
     float holding_time = 0.0f;
 
+    //super cheto
+    bool smiling_at_max = false;
+
     void Start()
     {
         movement_speed = base_movement_speed;
@@ -55,6 +59,7 @@ public class Player : MonoBehaviour
         bullets_in_range = new List<Bullet>();
         bullet_holded = null;
         holding_time = 0.0f;
+        smiling_at_max = false;
     }
 
 	
@@ -236,6 +241,10 @@ public class Player : MonoBehaviour
             death_bar = 100.0f;
             is_dead = true;
             return;
+        }
+        if(death_bar >= 90)
+        {
+            smiling_at_max = true;
         }
 
         movement_speed = base_movement_speed + max_mov_increase * (death_bar / 100.0f);

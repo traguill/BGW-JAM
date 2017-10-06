@@ -107,7 +107,7 @@ public class Bullet : MonoBehaviour {
         return false;
     }
 
-    public void Release(Vector3 new_direction, float time_holded)
+    public void Release(Vector3 new_direction, float time_holded, bool bosted)
     {
         holding = false;
         SetDirection(new_direction);
