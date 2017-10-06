@@ -904,6 +904,11 @@ Prefab:
       propertyPath: m_Radius
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114366702881010012, guid: 5d2d3b5c2b8017346949dbc094604841,
+        type: 2}
+      propertyPath: hit_dmg
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
   m_IsPrefabParent: 0
