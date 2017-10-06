@@ -10,6 +10,14 @@ public enum TURRET_ZONE
     WEST = 3
 }
 
+public enum START_STATE
+{
+    READY = 0,
+    STEADY = 1,
+    GO = 2,
+    MATCH = 3
+}
+
 public class TurretManager : MonoBehaviour {
 
     public int ideal_bullet_numbers = 25;
@@ -17,6 +25,10 @@ public class TurretManager : MonoBehaviour {
     public float dificulty_timer = 120f;
     public int initial_bullets_NS = 4;
     public int initial_bullets_WE = 3;
+    public int steady_bullets_NS = 4;
+    public int steady_bullets_WE = 3;
+    public int go_bullets_NS = 4;
+    public int go_bullets_WE = 3;
     public float dificulty_multi = 2;
     public float time_between_init_bullets = 0.25f;
     public int max_power = 0;
@@ -35,7 +47,7 @@ public class TurretManager : MonoBehaviour {
     float current_dificulty_timer = 0f;
     bool normal_behaviour = false;
     bool max_dificulty = false;
-    //Characters
+    START_STATE current_start_state = START_STATE.READY;
 
     // Use this for initialization
     void Awake ()
@@ -55,13 +67,13 @@ public class TurretManager : MonoBehaviour {
 
     private void Start()
     {
-        InitialBehaviour();
-        Invoke("StartNormalBeh", 5f);
+        current_start_state = START_STATE.MATCH;
+        ChangeStartState(START_STATE.READY);
     }
     // Update is called once per frame
     void Update ()
     { 
-        if(normal_behaviour)
+        if(current_start_state == START_STATE.MATCH)
         {
             NormalBehaviour();
             if(!max_dificulty)
@@ -99,13 +111,14 @@ public class TurretManager : MonoBehaviour {
         }
     }
 
-    void InitialBehaviour()
+    void InitialBehaviour(int ns,int we)
     {
-        StartCoroutine(DelayShoot(north_turrets, initial_bullets_NS));
-        StartCoroutine(DelayShoot(south_turrets, initial_bullets_NS));
-        StartCoroutine(DelayShoot(west_turrets, initial_bullets_WE));
-        StartCoroutine(DelayShoot(east_turrets, initial_bullets_WE));
+        StartCoroutine(DelayShoot(north_turrets, ns));
+        StartCoroutine(DelayShoot(south_turrets, ns));
+        StartCoroutine(DelayShoot(west_turrets, we));
+        StartCoroutine(DelayShoot(east_turrets, we));
     }
+
 
     public void AddBullet(Bullet b)
     {
@@ -163,18 +176,58 @@ public class TurretManager : MonoBehaviour {
 
     IEnumerator DelayShoot(List<Turret> turret_list,int num)
     {
+        START_STATE on_method_start = current_start_state;
         for(int i = 0;i<num;i++)
         {
             int ran = Random.Range(0, turret_list.Count);
             turret_list[ran].max_bullet_power = max_power;
             turret_list[ran].Shoot(bullets[0]);
-            yield return new WaitForSeconds(time_between_init_bullets);
+            float rand = Random.Range(time_between_init_bullets * 0.9f, time_between_init_bullets * 1.1f);
+            yield return new WaitForSeconds(rand + rand * i);
         }
+
+        if (current_start_state != START_STATE.MATCH && on_method_start == current_start_state)
+        {
+            on_method_start++;
+            ChangeStartState(on_method_start);
+        }
+            
+    }
+
+    void ChangeStartState(START_STATE new_state)
+    {
+        if (current_start_state == new_state)
+            return;
+        current_start_state = new_state;
+        switch (new_state)
+        {
+            case START_STATE.READY:
+                InitialBehaviour(initial_bullets_NS, initial_bullets_WE);
+                break;
+            case START_STATE.STEADY:
+                Invoke("Steady", 1f);
+                break;
+            case START_STATE.GO:
+                Invoke("StartGO", 0.5f);
+                break;
+            case START_STATE.MATCH:
+                StartNormalBeh();
+                break;
+        }
+    }
+
+    void Steady()
+    {
+        InitialBehaviour(steady_bullets_NS, steady_bullets_WE);
+    }
+
+    void StartGO()
+    {
+        InitialBehaviour(go_bullets_NS, go_bullets_WE);
     }
 
     void StartNormalBeh()
     {
-        normal_behaviour = true;
         max_power = 1;
     }
 
