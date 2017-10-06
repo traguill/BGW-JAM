@@ -128,9 +128,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.27, y: 10.99}
   serializedVersion: 2
-  m_Radius: 4
+  m_Radius: 12.4
 --- !u!58 &58382832971672284
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -143,9 +143,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.27, y: 10.99}
   serializedVersion: 2
-  m_Radius: 16.82
+  m_Radius: 28.48
 --- !u!95 &95726329679947622
 Animator:
   serializedVersion: 3
@@ -190,13 +190,15 @@ MonoBehaviour:
   base_movement_speed: 120
   hit_dmg: 5
   max_mov_increase: 5
-  stunned_duration: 2
+  stunned_duration: 0.5
+  recoil_duration: 0.2
   super_extasi_pc: 90
   max_holding_time: 2
   death_bar: 0
   bullet_tag: Bullet
   player_id: 1
   bullet_offset: 20
+  recoil_offset: 7
 --- !u!212 &212419227129278890
 SpriteRenderer:
   m_ObjectHideFlags: 1

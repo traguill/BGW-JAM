@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
     public float base_movement_speed = 2.0f;
     public float hit_dmg = 10.0f;
     public float max_mov_increase = 5.0f;
-    public float stunned_duration = 2.0f;
+    public float stunned_duration;
+    public float recoil_duration;
     public float super_extasi_pc = 90.0f;
     public float max_holding_time = 2f;
 
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
     //States (state machine?)
     private bool is_parrying = false;
     private bool stunned = false;
+    private bool is_recoiling = false;
 
     private float stunned_current_time = 0.0f;
 
@@ -47,6 +49,11 @@ public class Player : MonoBehaviour
     Bullet bullet_holded = null;
     float holding_time = 0.0f;
     public float bullet_offset;
+    public float recoil_offset;
+    float recoil_time;
+    float recoil_speed = 30.0f;
+    Vector3 start_recoil;
+    Vector3 end_recoil;
     Vector2 last_direction;
     int hold_level = 0;
 
@@ -114,19 +121,27 @@ public class Player : MonoBehaviour
                 return; //Holding the parry
             }
 
-            int angle = (int)(Mathf.Atan2(last_direction.x, last_direction.y)*Mathf.Rad2Deg);
-
-            
+            int angle = (int)(Mathf.Atan2(last_direction.x, last_direction.y)*Mathf.Rad2Deg);            
 
             //Release the parry
             SetBulletNewDirection();
+            Recoil();
             is_parrying = false;
+            return;
+        }
+
+        if(is_recoiling)
+        {
+            float dist_covered = (Time.time - recoil_time) * recoil_speed;
+            float frac_journey = dist_covered / recoil_offset;
+            transform.position = Vector3.Lerp(start_recoil, end_recoil, frac_journey);
+            Stunned(recoil_duration);
             return;
         }
 
         if (stunned)
         {
-            Stunned();
+            Stunned(stunned_duration);
             return;
         }
 
@@ -194,14 +209,30 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Stunned()
+    void Stunned(float stun_time)
     {
         stunned_current_time += Time.deltaTime;
-        if(stunned_current_time >= stunned_duration)
+        if(stunned_current_time >= stun_time)
         {
             stunned = false;
+            is_recoiling = false;
+            stunned_current_time = 0.0f;
             Debug.Log("Player" + player_id + " is no longer stunned");
         }
+    }
+
+    void Recoil()
+    {
+        is_recoiling = true;
+
+        Vector3 new_pos;
+        new_pos.x = gameObject.transform.position.x - (last_direction.normalized.x * recoil_offset);
+        new_pos.y = gameObject.transform.position.y - (last_direction.normalized.y * recoil_offset);
+        new_pos.z = gameObject.transform.position.z;
+
+        recoil_time = Time.time;
+        start_recoil = gameObject.transform.position;
+        end_recoil = new_pos;        
     }
 
     void ParryAction()
@@ -246,7 +277,6 @@ public class Player : MonoBehaviour
     void ParryFail()
     {
         stunned = true;
-        stunned_current_time = 0.0f;
         Debug.Log("Player " + player_id + " is stunned");
     }
 
@@ -283,8 +313,8 @@ public class Player : MonoBehaviour
     void SetBulletNewDirection()
     {
         Vector3 new_pos;
-        new_pos.x = gameObject.transform.position.x + (last_direction.normalized.x * bullet_offset);
-        new_pos.y = gameObject.transform.position.y + (last_direction.normalized.y * bullet_offset);
+        new_pos.x = gameObject.transform.position.x + gameObject.GetComponent<CircleCollider2D>().offset.x + (last_direction.normalized.x * bullet_offset);
+        new_pos.y = gameObject.transform.position.y + gameObject.GetComponent<CircleCollider2D>().offset.y + (last_direction.normalized.y * bullet_offset);
         new_pos.z = bullet_holded.transform.position.z;
         bullet_holded.transform.position = new_pos;
         bullet_holded.gameObject.SetActive(true);
