@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 4058876472510428}
   - component: {fileID: 58294234027832702}
   - component: {fileID: 114895960349757292}
+  - component: {fileID: 50492658804605932}
   m_Layer: 0
   m_Name: DeathCollider
   m_TagString: Untagged
@@ -84,6 +85,26 @@ Rigidbody2D:
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
+--- !u!50 &50492658804605932
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1620408757178732}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -139,10 +160,9 @@ MonoBehaviour:
   hit_dmg: 10
   max_mov_increase: 5
   stunned_duration: 2
-  invulnerable_duration: 0.5
   death_bar: 0
   bullet_tag: Bullet
-  player_id: 2
+  player_id: 1
 --- !u!114 &114895960349757292
 MonoBehaviour:
   m_ObjectHideFlags: 1

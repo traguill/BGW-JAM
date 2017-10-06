@@ -61,8 +61,23 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (is_dead)
-            return;
+        //Don't look down....
+        List<int> to_remove = new List<int>();
+        for (int i = 0; i < bullets_in_range.Count; ++i)
+        {
+            if(bullets_in_range[i] == null)
+            {
+                to_remove.Add(i);
+            }
+        }
+
+        foreach(int index in to_remove)
+        {
+            bullets_in_range.RemoveAt(index);
+        }
+
+            if (is_dead)
+                return;
 
         if(is_parrying)
         {
@@ -197,13 +212,24 @@ public class Player : MonoBehaviour
         }
 
         bullet_holded.Release(new Vector3(dx, dy, 0), holding_time);
+        bullet_holded = null;
     }
 
-    public void Hit()
+    public void Hit(Bullet bullet)
     {
         Debug.Log("Player: " + player_id + " hit");
         death_bar += hit_dmg;
 
+        bool found = bullets_in_range.Contains(bullet);
+
+        if (found)
+        {
+            bullets_in_range.Remove(bullet);
+            //Say bullet to destroy. Mark bullet as death. Remove it after anim.
+            bullet.IWantToDie();
+        }
+
+   
         if(death_bar >= 100.0f)
         {
             Debug.Log("Player: " + player_id + " is dead");
@@ -220,7 +246,12 @@ public class Player : MonoBehaviour
         if(col.transform.tag == bullet_tag)
         {
             Debug.Log("Bullet enter in player: " + player_id);
-            bullets_in_range.Add(col.GetComponent<Bullet>());
+            Bullet b = col.GetComponent<Bullet>();
+            if(b)
+            {
+                if(bullets_in_range.Contains(b) == false)
+                    bullets_in_range.Add(col.GetComponent<Bullet>());
+            }
         }
     }
 
@@ -229,7 +260,12 @@ public class Player : MonoBehaviour
         if(col.transform.tag == bullet_tag)
         {
             Debug.Log("Bullet exit in player: " + player_id);
-            bullets_in_range.Remove(col.GetComponent<Bullet>());
+            Bullet b = col.GetComponent<Bullet>();
+            if(b)
+            {
+                if (bullets_in_range.Contains(b))
+                    bullets_in_range.Remove(b);
+            }
         }
     }
 }

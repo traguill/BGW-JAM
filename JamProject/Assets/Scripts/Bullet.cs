@@ -5,15 +5,20 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
     //Public variables
-    public int max_velocity;
+    public float max_velocity;
+    public float max_acceleration;
+    public float acceleration_step;
     public int max_power = 1;
     public Color current_color = Color.white;
     float time_inside_wall = 0f;
     //Private variables
-    Vector3 velocity = Vector3.up;
+    Vector3 velocity = Vector3.zero;
+    Vector3 direction = Vector3.zero;
     int current_rebounds = 0;
     SpriteRenderer current_sprite;
     private bool holding = false; //One of the players is holding the ball
+    private bool dead = false;
+    private float acceleration;
     
 
     private void Start()
@@ -21,16 +26,26 @@ public class Bullet : MonoBehaviour {
         current_sprite = GetComponent<SpriteRenderer>();
         current_color = current_sprite.color;
         holding = false;
-        //TurretManager.current.AddBullet(this);
+        TurretManager.current.AddBullet(this);
+        dead = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (velocity.magnitude != max_velocity)
+        if (dead)
+            return;
+
+        if(velocity.magnitude < max_velocity && holding == false)
         {
-            velocity.Normalize();
-            velocity *= max_velocity;
+            acceleration += acceleration_step * Time.deltaTime;
+            if (acceleration > max_acceleration)
+                acceleration = max_acceleration;
+            velocity += direction * acceleration * Time.deltaTime;
+            if(velocity.magnitude > max_velocity)
+            {
+                velocity = direction * max_velocity;
+            }
         }
         current_sprite.color = current_color;
 
@@ -68,14 +83,17 @@ public class Bullet : MonoBehaviour {
     }
 
 
-    public void SetDirection(Vector3 new_vel)
+    public void SetDirection(Vector3 new_dir)
     {
-        if (new_vel.magnitude == 0)
-            velocity = -velocity;
+        if (new_dir.magnitude == 0)
+            direction = -direction;
         else
         {
-            velocity = new_vel;
+            direction = new_dir.normalized;
         }
+
+        acceleration = 0.0f;
+        velocity = Vector3.zero;
     }
 
     //Asks the ball to hold. If the ball is already holded by another player this method returns false
@@ -98,6 +116,12 @@ public class Bullet : MonoBehaviour {
 
     public void OnDestroy()
     {
-        //TurretManager.current.RemoveBullet(this);
+        TurretManager.current.RemoveBullet(this);
+    }
+
+    public void IWantToDie()
+    {
+        dead = true;
+        Destroy(gameObject, 0.5f);
     }
 }

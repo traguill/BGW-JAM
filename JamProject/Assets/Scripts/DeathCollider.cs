@@ -12,7 +12,7 @@ public class DeathCollider : MonoBehaviour
         if(col.tag == bullet_tag)
         {
             Debug.Log("Player: "+player.player_id+" has been hitted");
-            player.Hit();
+            player.Hit(col.gameObject.GetComponent<Bullet>());
         }
     }
 }
