@@ -8,14 +8,15 @@ public class Player : MonoBehaviour
     public float base_movement_speed = 2.0f;
     public float hit_dmg = 10.0f;
     public float max_mov_increase = 5.0f;
-    public float stunned_duration = 2.0f;
+    public float stunned_duration;
+    public float recoil_duration;
     public float super_extasi_pc = 90.0f;
     public float max_holding_time = 2f;
 
     [Header("Debugging")]
     public float death_bar = 0.0f;
     public string bullet_tag = "Bullet";
-
+    public float time_scale = 1;
     public int player_id;
 
     //Axis names
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
     //States (state machine?)
     private bool is_parrying = false;
     private bool stunned = false;
+    private bool is_recoiling = false;
 
     private float stunned_current_time = 0.0f;
 
@@ -47,6 +49,11 @@ public class Player : MonoBehaviour
     Bullet bullet_holded = null;
     float holding_time = 0.0f;
     public float bullet_offset;
+    public float recoil_offset;
+    float recoil_time;
+    float recoil_speed = 30.0f;
+    Vector3 start_recoil;
+    Vector3 end_recoil;
     Vector2 last_direction;
     int hold_level = 0;
 
@@ -55,7 +62,7 @@ public class Player : MonoBehaviour
 
     Animator anim;
     SpriteRenderer s_ren;
-
+    SpriteMask s_mask;
     void Start()
     {
         movement_speed = base_movement_speed;
@@ -69,12 +76,14 @@ public class Player : MonoBehaviour
         smiling_at_max = false;
         anim = GetComponent<Animator>();
         s_ren = GetComponent<SpriteRenderer>();
+        s_mask = GetComponentInChildren<SpriteMask>();
     }
 
 	
 	// Update is called once per frame
 	void Update () 
     {
+        s_mask.sprite = s_ren.sprite;
         //Don't look down....
         List<int> to_remove = new List<int>();
         for (int i = 0; i < bullets_in_range.Count; ++i)
@@ -113,20 +122,41 @@ public class Player : MonoBehaviour
                 ParryStay();
                 return; //Holding the parry
             }
-
-            int angle = (int)(Mathf.Atan2(last_direction.x, last_direction.y)*Mathf.Rad2Deg);
-
             
+            int angle = (int)(Mathf.Atan2(last_direction.x, last_direction.y)*Mathf.Rad2Deg);
+            angle = Mathf.Abs(angle);
+            Debug.Log("ANGLE:" + angle);
+            if(anim != null)
+            {
+                if (angle < 30)
+                    anim.SetTrigger("ShootUp");
+                else if (angle < 110)
+                    anim.SetTrigger("ShootRight");
+                else if (angle < 135)
+                    anim.SetTrigger("ShootAlmostDown");
+                else
+                    anim.SetTrigger("ShootDown");
+            }
 
             //Release the parry
             SetBulletNewDirection();
+            Recoil();
             is_parrying = false;
+            return;
+        }
+
+        if(is_recoiling)
+        {
+            float dist_covered = (Time.time - recoil_time) * recoil_speed;
+            float frac_journey = dist_covered / recoil_offset;
+            transform.position = Vector3.Lerp(start_recoil, end_recoil, frac_journey);
+            Stunned(recoil_duration);
             return;
         }
 
         if (stunned)
         {
-            Stunned();
+            Stunned(stunned_duration);
             return;
         }
 
@@ -157,7 +187,14 @@ public class Player : MonoBehaviour
         anim.SetFloat("velocity", velocity.magnitude);
 
         if (Mathf.Abs(dx * step) > 0)
-            s_ren.flipX = (dx * step) > 0 ? false : true;
+        {
+            bool rotate = (dx * step) > 0 ? false : true;
+
+            if (rotate)
+                transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
+            else
+                transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+        }
     }
 
     void MovementP2()
@@ -175,7 +212,15 @@ public class Player : MonoBehaviour
         anim.SetFloat("velocity", velocity.magnitude);
 
         if (Mathf.Abs(dx * step) > 0)
-            s_ren.flipX = (dx * step) > 0 ? false : true;
+        {
+            bool rotate = (dx * step) > 0 ? false : true;
+
+            if (rotate)
+                transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
+            else
+                transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+        }
+           
     }
 
     void ParryP1()
@@ -194,14 +239,30 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Stunned()
+    void Stunned(float stun_time)
     {
         stunned_current_time += Time.deltaTime;
-        if(stunned_current_time >= stunned_duration)
+        if(stunned_current_time >= stun_time)
         {
             stunned = false;
+            is_recoiling = false;
+            stunned_current_time = 0.0f;
             Debug.Log("Player" + player_id + " is no longer stunned");
         }
+    }
+
+    void Recoil()
+    {
+        is_recoiling = true;
+
+        Vector3 new_pos;
+        new_pos.x = gameObject.transform.position.x - (last_direction.normalized.x * recoil_offset);
+        new_pos.y = gameObject.transform.position.y - (last_direction.normalized.y * recoil_offset);
+        new_pos.z = gameObject.transform.position.z;
+
+        recoil_time = Time.time;
+        start_recoil = gameObject.transform.position;
+        end_recoil = new_pos;        
     }
 
     void ParryAction()
@@ -246,14 +307,12 @@ public class Player : MonoBehaviour
     void ParryFail()
     {
         stunned = true;
-        stunned_current_time = 0.0f;
         Debug.Log("Player " + player_id + " is stunned");
     }
 
     void ParryStay()
     {
         float current_per = holding_time / max_holding_time;
-        Debug.Log(current_per);
         if(current_per < 1f/3f )
         {
             hold_level = 0;
@@ -283,12 +342,11 @@ public class Player : MonoBehaviour
     void SetBulletNewDirection()
     {
         Vector3 new_pos;
-        new_pos.x = gameObject.transform.position.x + (last_direction.normalized.x * bullet_offset);
-        new_pos.y = gameObject.transform.position.y + (last_direction.normalized.y * bullet_offset);
+        new_pos.x = gameObject.transform.position.x + gameObject.GetComponent<CircleCollider2D>().offset.x + (last_direction.normalized.x * bullet_offset);
+        new_pos.y = gameObject.transform.position.y + gameObject.GetComponent<CircleCollider2D>().offset.y + (last_direction.normalized.y * bullet_offset);
         new_pos.z = bullet_holded.transform.position.z;
         bullet_holded.transform.position = new_pos;
         bullet_holded.gameObject.SetActive(true);
-
 
         if (anim != null)
             anim.SetBool("parry_end",true);
@@ -325,7 +383,7 @@ public class Player : MonoBehaviour
         {
             smiling_at_max = true;
         }
-
+        StartCoroutine(BlinkOnHit());
         movement_speed = base_movement_speed + max_mov_increase * (death_bar / 100.0f);
     }
 
@@ -355,5 +413,18 @@ public class Player : MonoBehaviour
                     bullets_in_range.Remove(b);
             }
         }
+    }
+
+    IEnumerator BlinkOnHit()
+    {
+        float blinks = 0;
+        while( blinks<5)
+        { 
+            s_mask.enabled = !s_mask.enabled;
+            blinks++;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        s_mask.enabled = false;
     }
 }
