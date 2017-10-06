@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour {
     public float max_acceleration;
     public float acceleration_step;
     public int max_power = 1;
+    public int ini_velocity = 2;
     public Color current_color = Color.white;
     float time_inside_wall = 0f;
     //Private variables
@@ -93,7 +94,7 @@ public class Bullet : MonoBehaviour {
         }
 
         acceleration = 0.0f;
-        velocity = Vector3.zero;
+        velocity = direction.normalized*ini_velocity;
     }
 
     //Asks the ball to hold. If the ball is already holded by another player this method returns false

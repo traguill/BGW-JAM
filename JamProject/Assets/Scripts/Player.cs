@@ -113,6 +113,11 @@ public class Player : MonoBehaviour
                 ParryStay();
                 return; //Holding the parry
             }
+
+            int angle = (int)(Mathf.Atan2(last_direction.x, last_direction.y)*Mathf.Rad2Deg);
+
+            
+
             //Release the parry
             SetBulletNewDirection();
             is_parrying = false;
