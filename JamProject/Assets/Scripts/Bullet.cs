@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour {
     {
         current_sprite = GetComponent<SpriteRenderer>();
         current_color = current_sprite.color;
-        TurretManager.current.AddBullet(this);
+        //TurretManager.current.AddBullet(this);
     }
 
     // Update is called once per frame
@@ -66,6 +66,6 @@ public class Bullet : MonoBehaviour {
 
     public void OnDestroy()
     {
-        TurretManager.current.RemoveBullet(this);
+        //TurretManager.current.RemoveBullet(this);
     }
 }

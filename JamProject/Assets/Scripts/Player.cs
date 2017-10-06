@@ -17,12 +17,17 @@ public class Player : MonoBehaviour
 
     public int player_id;
 
+    //Axis names
     private string p1_x_axis = "P1_MOV_HOR";
     private string p2_x_axis = "P2_MOV_HOR";
     private string p1_y_axis = "P1_MOV_VER";
     private string p2_y_axis = "P2_MOV_VER";
     private string p1_parry = "P1_PARRY";
     private string p2_parry = "P2_PARRY";
+    private string p1_parry_x_axis = "P1_PARRY_HOR";
+    private string p1_parry_y_axis = "P1_PARRY_VER";
+    private string p2_parry_x_axis = "P2_PARRY_HOR";
+    private string p2_parry_y_axis = "P2_PARRY_VER";
 
     private bool is_dead = false;
     
@@ -34,7 +39,7 @@ public class Player : MonoBehaviour
     private float invulnerable_current_time = 0.0f;
     private float stunned_current_time = 0.0f;
 
-    private List<Transform> bullets_in_range; //TODO: Change transform for Bullet Class
+    private List<Bullet> bullets_in_range; //TODO: Change transform for Bullet Class
 
     //Movement
     private float movement_speed = 0.0f;
@@ -47,7 +52,7 @@ public class Player : MonoBehaviour
         is_parrying = false;
         stunned = false;
         stunned_current_time = 0.0f;
-        bullets_in_range = new List<Transform>();
+        bullets_in_range = new List<Bullet>();
     }
 
 	
@@ -140,6 +145,10 @@ public class Player : MonoBehaviour
                 is_parrying = true;
                 invulnerable = true;
                 invulnerable_current_time = 0.0f;
+                Debug.Log("Player: " + player_id + "is parrying");
+
+                SetBulletNewDirection();
+              
             }
             else
             {
@@ -148,6 +157,23 @@ public class Player : MonoBehaviour
                 Debug.Log("Player " + player_id + " is stunned");
             }
         }
+    }
+
+    void SetBulletNewDirection()
+    {
+        float dx, dy;
+        if(player_id == 1)
+        {
+            dx = Input.GetAxis(p1_parry_x_axis);
+            dy = Input.GetAxis(p1_parry_y_axis);
+        }
+        else
+        {
+            dx = Input.GetAxis(p2_parry_x_axis);
+            dy = Input.GetAxis(p2_parry_y_axis);
+        }
+
+        bullets_in_range[0].SetDirection(new Vector3(dx, dy, 0));
     }
 
     public void Hit()
@@ -169,21 +195,21 @@ public class Player : MonoBehaviour
         movement_speed = base_movement_speed + max_mov_increase * (death_bar / 100.0f);
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         if(col.transform.tag == bullet_tag)
         {
             Debug.Log("Bullet enter in player: " + player_id);
-            bullets_in_range.Add(col.transform);
+            bullets_in_range.Add(col.GetComponent<Bullet>());
         }
     }
 
-    void OnCollisionExit2D(Collision2D col)
+    void OnTriggerExit2D(Collider2D col)
     {
         if(col.transform.tag == bullet_tag)
         {
             Debug.Log("Bullet exit in player: " + player_id);
-            bullets_in_range.Remove(col.transform);
+            bullets_in_range.Remove(col.GetComponent<Bullet>());
         }
     }
 }
