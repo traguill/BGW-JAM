@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     public float hit_dmg = 10.0f;
     public float max_mov_increase = 5.0f;
     public float stunned_duration = 2.0f;
-    public float invulnerable_duration = 0.5f;
 
     [Header("Debugging")]
     public float death_bar = 0.0f;
@@ -32,11 +31,9 @@ public class Player : MonoBehaviour
     private bool is_dead = false;
     
     //States (state machine?)
-    private bool invulnerable = false;
     private bool is_parrying = false;
     private bool stunned = false;
 
-    private float invulnerable_current_time = 0.0f;
     private float stunned_current_time = 0.0f;
 
     private List<Bullet> bullets_in_range; //TODO: Change transform for Bullet Class
@@ -44,15 +41,20 @@ public class Player : MonoBehaviour
     //Movement
     private float movement_speed = 0.0f;
 
+    //Hold the ball
+    Bullet bullet_holded = null;
+    float holding_time = 0.0f;
+
     void Start()
     {
         movement_speed = base_movement_speed;
         is_dead = false;
-        invulnerable = false;
         is_parrying = false;
         stunned = false;
         stunned_current_time = 0.0f;
         bullets_in_range = new List<Bullet>();
+        bullet_holded = null;
+        holding_time = 0.0f;
     }
 
 	
@@ -64,12 +66,14 @@ public class Player : MonoBehaviour
 
         if(is_parrying)
         {
-            invulnerable_current_time += Time.deltaTime;
-            if(invulnerable_current_time >= invulnerable_duration)
+            if( (Input.GetAxis(p1_parry) > 0.0f && player_id == 1) || (Input.GetAxis(p2_parry) > 0.0f && player_id == 2))
             {
-                invulnerable = false;
-                is_parrying = false;
+                holding_time += Time.deltaTime;
+                return; //Holding the parry
             }
+            //Release the parry
+            SetBulletNewDirection();
+            is_parrying = false;
             return;
         }
 
@@ -142,21 +146,40 @@ public class Player : MonoBehaviour
         {
             if(bullets_in_range.Count > 0)
             {
-                is_parrying = true;
-                invulnerable = true;
-                invulnerable_current_time = 0.0f;
-                Debug.Log("Player: " + player_id + "is parrying");
+                bool success = false;
+                foreach(Bullet b in bullets_in_range)
+                {
+                    success = b.Hold();
+                    if (success)
+                    {
+                        bullet_holded = b;
+                        break;
+                    }
+                }
 
-                SetBulletNewDirection();
-              
+                if(success)
+                {
+                    is_parrying = true;
+                    holding_time = 0.0f;
+                    Debug.Log("Player: " + player_id + "is parrying");
+                }
+                else
+                {
+                    ParryFail();
+                }
             }
             else
             {
-                stunned = true;
-                stunned_current_time = 0.0f;
-                Debug.Log("Player " + player_id + " is stunned");
+                ParryFail();
             }
         }
+    }
+
+    void ParryFail()
+    {
+        stunned = true;
+        stunned_current_time = 0.0f;
+        Debug.Log("Player " + player_id + " is stunned");
     }
 
     void SetBulletNewDirection()
@@ -164,23 +187,20 @@ public class Player : MonoBehaviour
         float dx, dy;
         if(player_id == 1)
         {
-            dx = Input.GetAxis(p1_parry_x_axis);
-            dy = Input.GetAxis(p1_parry_y_axis);
+            dx = Input.GetAxis(p1_x_axis);
+            dy = Input.GetAxis(p1_y_axis);
         }
         else
         {
-            dx = Input.GetAxis(p2_parry_x_axis);
-            dy = Input.GetAxis(p2_parry_y_axis);
+            dx = Input.GetAxis(p2_x_axis);
+            dy = Input.GetAxis(p2_y_axis);
         }
 
-        bullets_in_range[0].SetDirection(new Vector3(dx, dy, 0));
+        bullet_holded.Release(new Vector3(dx, dy, 0), holding_time);
     }
 
     public void Hit()
     {
-        if (invulnerable)
-            return;
-
         Debug.Log("Player: " + player_id + " hit");
         death_bar += hit_dmg;
 
