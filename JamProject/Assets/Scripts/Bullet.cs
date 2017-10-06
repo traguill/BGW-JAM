@@ -13,12 +13,14 @@ public class Bullet : MonoBehaviour {
     Vector3 velocity = Vector3.up;
     int current_rebounds = 0;
     SpriteRenderer current_sprite;
+    private bool holding = false; //One of the players is holding the ball
     
 
     private void Start()
     {
         current_sprite = GetComponent<SpriteRenderer>();
         current_color = current_sprite.color;
+        holding = false;
         //TurretManager.current.AddBullet(this);
     }
 
@@ -31,7 +33,9 @@ public class Bullet : MonoBehaviour {
             velocity *= max_velocity;
         }
         current_sprite.color = current_color;
-        transform.position += velocity * Time.deltaTime;
+
+        if(holding == false)
+            transform.position += velocity * Time.deltaTime;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -72,7 +76,24 @@ public class Bullet : MonoBehaviour {
         {
             velocity = new_vel;
         }
+    }
 
+    //Asks the ball to hold. If the ball is already holded by another player this method returns false
+    public bool Hold()
+    {
+        if(!holding)
+        {
+            holding = true;
+            return holding;
+        }
+        return false;
+    }
+
+    public void Release(Vector3 new_direction, float time_holded)
+    {
+        holding = false;
+        SetDirection(new_direction);
+        Debug.Log("Ball holded " + time_holded + " sec");
     }
 
     public void OnDestroy()
