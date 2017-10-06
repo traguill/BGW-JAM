@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [Header("Debugging")]
     public float death_bar = 0.0f;
     public string bullet_tag = "Bullet";
-
+    public float time_scale = 1;
     public int player_id;
 
     //Axis names
@@ -75,6 +75,7 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+        Time.timeScale = time_scale;
         //Don't look down....
         List<int> to_remove = new List<int>();
         for (int i = 0; i < bullets_in_range.Count; ++i)
@@ -115,8 +116,19 @@ public class Player : MonoBehaviour
             }
 
             int angle = (int)(Mathf.Atan2(last_direction.x, last_direction.y)*Mathf.Rad2Deg);
-
-            
+            angle = Mathf.Abs(angle);
+            Debug.Log("ANGLE:" + angle);
+            if(anim != null)
+            {
+                if (angle < 30)
+                    anim.SetTrigger("ShootUp");
+                else if (angle < 110)
+                    anim.SetTrigger("ShootRight");
+                else if (angle < 135)
+                    anim.SetTrigger("ShootAlmostDown");
+                else
+                    anim.SetTrigger("ShootDown");
+            }
 
             //Release the parry
             SetBulletNewDirection();
@@ -253,7 +265,6 @@ public class Player : MonoBehaviour
     void ParryStay()
     {
         float current_per = holding_time / max_holding_time;
-        Debug.Log(current_per);
         if(current_per < 1f/3f )
         {
             hold_level = 0;
@@ -316,10 +327,10 @@ public class Player : MonoBehaviour
 
         if(death_bar >= 100.0f)
         {
-            Debug.Log("Player: " + player_id + " is dead");
+            /*Debug.Log("Player: " + player_id + " is dead");
             death_bar = 100.0f;
             is_dead = true;
-            return;
+            return;*/
         }
         if(death_bar >= super_extasi_pc)
         {
