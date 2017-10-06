@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 
     Animator anim;
     SpriteRenderer s_ren;
-
+    SpriteMask s_mask;
     void Start()
     {
         movement_speed = base_movement_speed;
@@ -69,13 +69,14 @@ public class Player : MonoBehaviour
         smiling_at_max = false;
         anim = GetComponent<Animator>();
         s_ren = GetComponent<SpriteRenderer>();
+        s_mask = GetComponentInChildren<SpriteMask>();
     }
 
 	
 	// Update is called once per frame
 	void Update () 
     {
-        Time.timeScale = time_scale;
+        s_mask.sprite = s_ren.sprite;
         //Don't look down....
         List<int> to_remove = new List<int>();
         for (int i = 0; i < bullets_in_range.Count; ++i)
@@ -169,7 +170,14 @@ public class Player : MonoBehaviour
         anim.SetFloat("velocity", velocity.magnitude);
 
         if (Mathf.Abs(dx * step) > 0)
-            s_ren.flipX = (dx * step) > 0 ? false : true;
+        {
+            bool rotate = (dx * step) > 0 ? false : true;
+
+            if (rotate)
+                transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
+            else
+                transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+        }
     }
 
     void MovementP2()
@@ -187,7 +195,15 @@ public class Player : MonoBehaviour
         anim.SetFloat("velocity", velocity.magnitude);
 
         if (Mathf.Abs(dx * step) > 0)
-            s_ren.flipX = (dx * step) > 0 ? false : true;
+        {
+            bool rotate = (dx * step) > 0 ? false : true;
+
+            if (rotate)
+                transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
+            else
+                transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+        }
+           
     }
 
     void ParryP1()
@@ -212,6 +228,7 @@ public class Player : MonoBehaviour
         if(stunned_current_time >= stunned_duration)
         {
             stunned = false;
+            s_mask.enabled = false;
             Debug.Log("Player" + player_id + " is no longer stunned");
         }
     }
@@ -300,7 +317,6 @@ public class Player : MonoBehaviour
         bullet_holded.transform.position = new_pos;
         bullet_holded.gameObject.SetActive(true);
 
-
         if (anim != null)
             anim.SetBool("parry_end",true);
 
@@ -327,16 +343,16 @@ public class Player : MonoBehaviour
 
         if(death_bar >= 100.0f)
         {
-            /*Debug.Log("Player: " + player_id + " is dead");
+            Debug.Log("Player: " + player_id + " is dead");
             death_bar = 100.0f;
             is_dead = true;
-            return;*/
+            return;
         }
         if(death_bar >= super_extasi_pc)
         {
             smiling_at_max = true;
         }
-
+        StartCoroutine(BlinkOnHit());
         movement_speed = base_movement_speed + max_mov_increase * (death_bar / 100.0f);
     }
 
@@ -366,5 +382,18 @@ public class Player : MonoBehaviour
                     bullets_in_range.Remove(b);
             }
         }
+    }
+
+    IEnumerator BlinkOnHit()
+    {
+        float blinks = 0;
+        while( blinks<5)
+        { 
+            s_mask.enabled = !s_mask.enabled;
+            blinks++;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        s_mask.enabled = false;
     }
 }
