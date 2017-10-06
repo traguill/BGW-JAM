@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public float max_mov_increase = 5.0f;
     public float stunned_duration = 2.0f;
     public float super_extasi_pc = 90.0f;
+    public float max_holding_time = 2f;
 
     [Header("Debugging")]
     public float death_bar = 0.0f;
@@ -45,9 +46,13 @@ public class Player : MonoBehaviour
     //Hold the ball
     Bullet bullet_holded = null;
     float holding_time = 0.0f;
+    int hold_level = 0;
 
     //super cheto
     bool smiling_at_max = false;
+
+    Animator anim;
+    SpriteRenderer s_ren;
 
     void Start()
     {
@@ -60,6 +65,8 @@ public class Player : MonoBehaviour
         bullet_holded = null;
         holding_time = 0.0f;
         smiling_at_max = false;
+        anim = GetComponent<Animator>();
+        s_ren = GetComponent<SpriteRenderer>();
     }
 
 	
@@ -89,6 +96,7 @@ public class Player : MonoBehaviour
             if( (Input.GetAxis(p1_parry) > 0.0f && player_id == 1) || (Input.GetAxis(p2_parry) > 0.0f && player_id == 2))
             {
                 holding_time += Time.deltaTime;
+                ParryStay();
                 return; //Holding the parry
             }
             //Release the parry
@@ -121,8 +129,16 @@ public class Player : MonoBehaviour
         float dx = Input.GetAxis(p1_x_axis);
         float dy = Input.GetAxis(p1_y_axis);
 
-        transform.position += new Vector3(dx * step, dy * step, 0);
+        Vector3 velocity = new Vector3((dx * step), dy * step, 0);
 
+        transform.position += velocity;
+
+        if (anim == null)
+            return;
+        anim.SetFloat("velocity", velocity.magnitude);
+
+        if (Mathf.Abs(dx * step) > 0)
+            s_ren.flipX = (dx * step) > 0 ? false : true;
     }
 
     void MovementP2()
@@ -131,7 +147,16 @@ public class Player : MonoBehaviour
         float dx = Input.GetAxis(p2_x_axis);
         float dy = Input.GetAxis(p2_y_axis);
 
-        transform.position += new Vector3(dx * step, dy * step, 0);
+        Vector3 velocity = new Vector3((dx * step), dy * step, 0);
+
+        transform.position += velocity;
+
+        if (anim == null)
+            return;
+        anim.SetFloat("velocity", velocity.magnitude);
+
+        if (Mathf.Abs(dx * step) > 0)
+            s_ren.flipX = (dx * step) > 0 ? false : true;
     }
 
     void ParryP1()
@@ -181,7 +206,10 @@ public class Player : MonoBehaviour
                 {
                     is_parrying = true;
                     holding_time = 0.0f;
+                    hold_level = 0;
                     Debug.Log("Player: " + player_id + "is parrying");
+                    if(anim != null)
+                        anim.SetTrigger("parry");
                 }
                 else
                 {
@@ -202,6 +230,36 @@ public class Player : MonoBehaviour
         Debug.Log("Player " + player_id + " is stunned");
     }
 
+    void ParryStay()
+    {
+        float current_per = holding_time / max_holding_time;
+        Debug.Log(current_per);
+        if(current_per < 1f/3f )
+        {
+            hold_level = 0;
+        }
+        else if (current_per < 2f / 3f)
+        {
+            if (hold_level == 1)
+                return;
+            if(anim != null)
+            {
+                anim.SetTrigger("parry");
+                hold_level = 1;
+            }
+        }
+        else
+        {
+            if (hold_level == 2)
+                return;
+
+            if (anim != null)
+            {
+                anim.SetTrigger("parry");
+                hold_level = 2;
+            }
+        }
+    }
     void SetBulletNewDirection()
     {
         float dx, dy;
@@ -216,14 +274,20 @@ public class Player : MonoBehaviour
             dy = Input.GetAxis(p2_y_axis);
         }
 
-        bullet_holded.Release(new Vector3(dx, dy, 0), holding_time);
+        if (anim != null)
+            anim.SetBool("parry_end",true);
+
+        int boost = smiling_at_max ? 1 : 0;
+        bullet_holded.max_velocity *= (hold_level + 1 + boost) - (hold_level) * 0.5f;
+        bullet_holded.acceleration_step *= (hold_level + 1 + boost) - (hold_level) * 0.5f;
+        bullet_holded.Release(new Vector3(dx, dy, 0), holding_time,smiling_at_max);
         bullet_holded = null;
     }
 
     public void Hit(Bullet bullet)
     {
         Debug.Log("Player: " + player_id + " hit");
-        death_bar += hit_dmg;
+        death_bar += hit_dmg * (bullet.max_power +1);
 
         bool found = bullets_in_range.Contains(bullet);
 
@@ -234,7 +298,6 @@ public class Player : MonoBehaviour
             bullet.IWantToDie();
         }
 
-   
         if(death_bar >= 100.0f)
         {
             Debug.Log("Player: " + player_id + " is dead");
@@ -242,7 +305,7 @@ public class Player : MonoBehaviour
             is_dead = true;
             return;
         }
-        if(death_bar >= 90)
+        if(death_bar >= super_extasi_pc)
         {
             smiling_at_max = true;
         }

@@ -108,6 +108,28 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &536702274 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1434967637508386, guid: 5d2d3b5c2b8017346949dbc094604841,
+    type: 2}
+  m_PrefabInternal: {fileID: 1482894273}
+--- !u!95 &536702275
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 536702274}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: db1d2ec4ee595554ea8f0cd7c87148df, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &563251971
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &861212008
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -354,7 +376,8 @@ MonoBehaviour:
   hit_dmg: 10
   max_mov_increase: 5
   stunned_duration: 2
-  invulnerable_duration: 0.5
+  super_extasi_pc: 90
+  max_holding_time: 2
   death_bar: 0
   bullet_tag: Bullet
   player_id: 1
@@ -474,7 +497,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 101
+  orthographic size: 106
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -483,8 +506,8 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -516,13 +539,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxCameraHalfWidthEnabled: 0
   maxCameraHalfHeightEnabled: 0
-  maxCameraHalfWidth: 3
+  maxCameraHalfWidth: 190
   maxCameraHalfHeight: 2
-  targetDimension: 1
-  targetCameraHalfWidth: 2
+  targetDimension: 0
+  targetCameraHalfWidth: 190
   targetCameraHalfHeight: 100
   pixelPerfect: 1
-  retroSnap: 0
+  retroSnap: 1
   assetsPixelsPerUnit: 1
   showHUD: 0
 --- !u!1001 &1136245382
@@ -816,6 +839,74 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9f4aa80f295c0543bcf5d6c5250f9c6, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &1482894273
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4123410413525014, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -55.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123410413525014, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123410413525014, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123410413525014, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123410413525014, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123410413525014, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123410413525014, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123410413525014, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434967637508386, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_Name
+      value: PlayerRed
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123410413525014, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123410413525014, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123410413525014, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 58761262605225470, guid: 5d2d3b5c2b8017346949dbc094604841,
+        type: 2}
+      propertyPath: m_Radius
+      value: 16.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 58294234027832702, guid: 5d2d3b5c2b8017346949dbc094604841,
+        type: 2}
+      propertyPath: m_Radius
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 5d2d3b5c2b8017346949dbc094604841, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1519307402
 Prefab:
   m_ObjectHideFlags: 0
@@ -1021,13 +1112,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c01d63889e4c0f4eb080a7cd8992dde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ideal_bullet_numbers: 25
+  ideal_bullet_numbers: 5
   bullet_cooldown: 2
   dificulty_timer: 120
   initial_bullets_NS: 4
   initial_bullets_WE: 3
-  dificulty_multi: 2
+  steady_bullets_NS: 4
+  steady_bullets_WE: 3
+  go_bullets_NS: 4
+  go_bullets_WE: 3
   time_between_init_bullets: 0.25
+  time_to_steady: 1
+  time_to_go: 0.5
+  cooldown_divider: 2
+  ideal_bullet_mult: 2
   max_power: 0
   bullets:
   - {fileID: 1732039238426842, guid: 818689e32e3e2f8459ab067a9bf1dbcb, type: 2}
