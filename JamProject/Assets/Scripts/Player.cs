@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
     //Hold the ball
     Bullet bullet_holded = null;
     float holding_time = 0.0f;
+    public float bullet_offset;
+    Vector2 last_direction;
 
     void Start()
     {
@@ -81,7 +83,19 @@ public class Player : MonoBehaviour
 
         if(is_parrying)
         {
-            if( (Input.GetAxis(p1_parry) > 0.0f && player_id == 1) || (Input.GetAxis(p2_parry) > 0.0f && player_id == 2))
+            //Save aim direction
+            if (player_id == 1)
+            {
+                last_direction.x = Input.GetAxis(p1_x_axis);
+                last_direction.y = Input.GetAxis(p1_y_axis);
+            }
+            else
+            {
+                last_direction.x = Input.GetAxis(p2_x_axis);
+                last_direction.y = Input.GetAxis(p2_y_axis);
+            }
+
+            if ( (Input.GetAxis(p1_parry) > 0.0f && player_id == 1) || (Input.GetAxis(p2_parry) > 0.0f && player_id == 2))
             {
                 holding_time += Time.deltaTime;
                 return; //Holding the parry
@@ -168,6 +182,7 @@ public class Player : MonoBehaviour
                     if (success)
                     {
                         bullet_holded = b;
+                        b.gameObject.SetActive(false);
                         break;
                     }
                 }
@@ -199,19 +214,14 @@ public class Player : MonoBehaviour
 
     void SetBulletNewDirection()
     {
-        float dx, dy;
-        if(player_id == 1)
-        {
-            dx = Input.GetAxis(p1_x_axis);
-            dy = Input.GetAxis(p1_y_axis);
-        }
-        else
-        {
-            dx = Input.GetAxis(p2_x_axis);
-            dy = Input.GetAxis(p2_y_axis);
-        }
+        Vector3 new_pos;
+        new_pos.x = gameObject.transform.position.x + (last_direction.normalized.x * bullet_offset);
+        new_pos.y = gameObject.transform.position.y + (last_direction.normalized.y * bullet_offset);
+        new_pos.z = bullet_holded.transform.position.z;
+        bullet_holded.transform.position = new_pos;
+        bullet_holded.gameObject.SetActive(true);
 
-        bullet_holded.Release(new Vector3(dx, dy, 0), holding_time);
+        bullet_holded.Release(new Vector3(last_direction.x, last_direction.y, 0), holding_time);
         bullet_holded = null;
     }
 
