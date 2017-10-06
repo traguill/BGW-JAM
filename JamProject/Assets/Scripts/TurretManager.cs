@@ -29,8 +29,11 @@ public class TurretManager : MonoBehaviour {
     public int steady_bullets_WE = 3;
     public int go_bullets_NS = 4;
     public int go_bullets_WE = 3;
-    public float dificulty_multi = 2;
     public float time_between_init_bullets = 0.25f;
+    public float time_to_steady = 1f;
+    public float time_to_go = 0.5f;
+    public float cooldown_divider = 2f;
+    public int ideal_bullet_mult = 2;
     public int max_power = 0;
     public GameObject[] bullets;
 
@@ -86,8 +89,8 @@ public class TurretManager : MonoBehaviour {
     {
         if (dificulty_timer <= current_dificulty_timer)
         {
-            bullet_cooldown /= dificulty_multi;
-            ideal_bullet_numbers *= (int)dificulty_multi;
+            bullet_cooldown /= cooldown_divider;
+            ideal_bullet_numbers *= (int)ideal_bullet_mult;
             max_dificulty = true;
         }
         else
@@ -205,10 +208,10 @@ public class TurretManager : MonoBehaviour {
                 InitialBehaviour(initial_bullets_NS, initial_bullets_WE);
                 break;
             case START_STATE.STEADY:
-                Invoke("Steady", 1f);
+                Invoke("Steady", time_to_steady);
                 break;
             case START_STATE.GO:
-                Invoke("StartGO", 0.5f);
+                Invoke("StartGO", time_to_go);
                 break;
             case START_STATE.MATCH:
                 StartNormalBeh();
