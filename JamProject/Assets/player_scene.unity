@@ -139,6 +139,8 @@ MonoBehaviour:
   base_movement_speed: 2
   hit_dmg: 10
   max_mov_increase: 5
+  stunned_duration: 2
+  invulnerable_duration: 0.5
   death_bar: 0
   bullet_tag: Bullet
   player_id: 2
