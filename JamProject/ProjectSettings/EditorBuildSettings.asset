@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/main_menu.unity
+    guid: 7bde244b284c972458f5e59cd6efd396
+  - enabled: 1
+    path: Assets/CredtisScene.unity
+    guid: 3b2053a3a0786dc44bf51ed965a4f0ad

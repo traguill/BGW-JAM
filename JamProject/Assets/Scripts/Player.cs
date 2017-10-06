@@ -216,7 +216,7 @@ public class Player : MonoBehaviour
             dy = Input.GetAxis(p2_y_axis);
         }
 
-        bullet_holded.Release(new Vector3(dx, dy, 0), holding_time);
+        //bullet_holded.Release(new Vector3(dx, dy, 0), holding_time);
         bullet_holded = null;
     }
 
