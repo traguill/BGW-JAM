@@ -120,7 +120,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1655492867509860}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 76.6, y: -3.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -130,7 +130,7 @@ Transform:
   - {fileID: 4065888583003012}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4258858786287546
 Transform:
   m_ObjectHideFlags: 1
@@ -239,7 +239,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 2.08, y: 10.2}
   serializedVersion: 2
-  m_Radius: 30
+  m_Radius: 35
 --- !u!95 &95404977642833398
 Animator:
   serializedVersion: 3
@@ -299,9 +299,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   base_movement_speed: 120
-  hit_dmg: 5
+  hit_dmg: 3
   max_mov_increase: 60
-  stunned_duration: 0.5
+  stunned_duration: 0.55
   recoil_duration: 0.2
   super_extasi_pc: 90
   max_holding_time: 2
@@ -311,6 +311,8 @@ MonoBehaviour:
   player_id: 2
   die_part1: {fileID: 1764854345427528, guid: 098a76e140baa2147af7fb0d8050f15d, type: 2}
   die_part2: {fileID: 1999125723676128, guid: e7fe09ee9d491a84d87bd9f3f698d4f1, type: 2}
+  absorv_part: {fileID: 1170277230317708, guid: 7324a0c795f5d13408237e112fd593fb,
+    type: 2}
   game_manager: {fileID: 0}
   bullet_offset: 20
   recoil_offset: 7
@@ -453,7 +455,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -999
   m_Sprite: {fileID: 21300000, guid: 42cd93b3e800f8d45af46dde44326c2e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.309}
   m_FlipX: 0
