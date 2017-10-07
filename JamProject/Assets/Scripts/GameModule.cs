@@ -14,10 +14,6 @@ public class GameModule : MonoBehaviour
     public string menu_scene;
     public string game_scene;
 
-    [Header("Start Text anim")]
-    public Text start_text;
-    public int max_font;
-
     bool game_over = false;
     float alpha_txt = 0.0f;
 
@@ -36,15 +32,12 @@ public class GameModule : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        start_text.gameObject.SetActive(true);
-        start_text.text = "3";
-        start_text.fontSize = 0;
 
         winner_p1.gameObject.SetActive(false);
         winner_p2.gameObject.SetActive(false);
         rematch.gameObject.SetActive(false);
         quit.gameObject.SetActive(false);
-        black.gameObject.SetActive(false);
+        black.gameObject.SetActive(true);
 	}
 	
 	// Update is called once per frame
@@ -52,7 +45,7 @@ public class GameModule : MonoBehaviour
     {
         if(doing_intro)
         {
-            Intro();
+            return;
         }
 
         if(game_over)
@@ -65,30 +58,6 @@ public class GameModule : MonoBehaviour
 		
 	}
 
-    void Intro()
-    {
-        countdown_counter += Time.deltaTime;
-        start_text.fontSize = (int)((float)max_font * Mathf.Sin(countdown_counter));
-        if(countdown_counter >= 1.0f)
-        {
-            --countdown;
-            countdown_counter = 0.0f;
-            start_text.fontSize = 0;
-            if(countdown > 0)
-            {
-                start_text.text = countdown.ToString();
-            }else if(countdown == 0)
-            {
-                start_text.text = "GO!";
-            }
-            else
-            {
-                start_text.gameObject.SetActive(false);
-                doing_intro = false;
-                EventStart();
-            }
-        }
-    }
 
     public void EndGame(int looser_id)
     {
@@ -123,5 +92,11 @@ public class GameModule : MonoBehaviour
         turret_manager.GameStarts();
         p1.GameStars();
         p2.GameStars();
+    }
+
+    public void IntroFinished()
+    {
+        doing_intro = false;
+        EventStart();
     }
 }
