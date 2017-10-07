@@ -466,6 +466,7 @@ MonoBehaviour:
   player_id: 1
   bullet_offset: 0
   recoil_offset: 0
+  smile_level: 0
 --- !u!1001 &932033443
 Prefab:
   m_ObjectHideFlags: 0
@@ -582,7 +583,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 106
+  orthographic size: 65.66667
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
