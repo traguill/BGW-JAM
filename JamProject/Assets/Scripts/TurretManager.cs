@@ -231,7 +231,7 @@ public class TurretManager : MonoBehaviour {
 
     void StartNormalBeh()
     {
-        max_power = 1;
+        max_power = 3;
     }
 
     void AddZone()
