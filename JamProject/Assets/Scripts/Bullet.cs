@@ -59,7 +59,7 @@ public class Bullet : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Wall") && !dead)
         {
             if (max_power <= current_rebounds)
             {
@@ -72,6 +72,7 @@ public class Bullet : MonoBehaviour {
             {
                 ContactPoint2D contact = collision.contacts[0];
                 velocity = Vector3.Reflect(velocity, contact.normal);
+                direction = velocity.normalized;
                 current_rebounds++;
             }
         }
@@ -79,7 +80,7 @@ public class Bullet : MonoBehaviour {
 
     void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Wall") && !dead)
         {
             if (time_inside_wall > 0.25f)
                 Destroy(gameObject);
