@@ -212,6 +212,111 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &624326307
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224924066446574102, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 223132026289117248, guid: 254d7d7bd9450414bbd67137c7051761,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1074813323}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 254d7d7bd9450414bbd67137c7051761, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &679036325
 Prefab:
   m_ObjectHideFlags: 0
@@ -991,8 +1096,11 @@ MonoBehaviour:
   steady_bullets_WE: 1
   go_bullets_NS: 1
   go_bullets_WE: 1
-  dificulty_multi: 1
   time_between_init_bullets: 0.25
+  time_to_steady: 1
+  time_to_go: 0.5
+  cooldown_divider: 2
+  ideal_bullet_mult: 2
   max_power: 0
   bullets:
   - {fileID: 1732039238426842, guid: 818689e32e3e2f8459ab067a9bf1dbcb, type: 2}
