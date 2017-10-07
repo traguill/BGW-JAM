@@ -633,7 +633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 1
+    m_Mode: 2
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -724,7 +724,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 248, y: -153.69998}
+  m_AnchoredPosition: {x: 19, y: -209}
   m_SizeDelta: {x: 159, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &336269928
@@ -1357,12 +1357,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -416.5, y: 416.5}
-      - {x: -409.71252, y: -592.9743}
-      - {x: 410.84375, y: -590.71173}
-      - {x: 416.5, y: 416.5}
-    - - {x: -373.5, y: 373.5}
-      - {x: 392.4528, y: 378.23816}
+    - - {x: -614.6515, y: 672.2779}
+      - {x: -607.8655, y: -715.23303}
+      - {x: 635.7001, y: -727.0226}
+      - {x: 634.32886, y: 680.70953}
+    - - {x: -373.5, y: 412.8532}
+      - {x: 393.85825, y: 414.7804}
       - {x: 391.26828, y: -513.27686}
       - {x: -373.5, y: -513.27686}
 --- !u!212 &563251973
@@ -1420,6 +1420,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &583946025 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114267655742400206, guid: 6c2750acb8f38fb4d881191cea548ec9,
+    type: 2}
+  m_PrefabInternal: {fileID: 829468401}
+  m_Script: {fileID: 11500000, guid: 3c01d63889e4c0f4eb080a7cd8992dde, type: 3}
 --- !u!1001 &660624337
 Prefab:
   m_ObjectHideFlags: 0
@@ -1659,6 +1665,48 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 418228136}
   m_Script: {fileID: 11500000, guid: 904dc5b66daeff8469ba9c1bae056b87, type: 3}
+--- !u!1001 &829468401
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4968473965786608, guid: 6c2750acb8f38fb4d881191cea548ec9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968473965786608, guid: 6c2750acb8f38fb4d881191cea548ec9, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968473965786608, guid: 6c2750acb8f38fb4d881191cea548ec9, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968473965786608, guid: 6c2750acb8f38fb4d881191cea548ec9, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968473965786608, guid: 6c2750acb8f38fb4d881191cea548ec9, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968473965786608, guid: 6c2750acb8f38fb4d881191cea548ec9, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968473965786608, guid: 6c2750acb8f38fb4d881191cea548ec9, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968473965786608, guid: 6c2750acb8f38fb4d881191cea548ec9, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 6c2750acb8f38fb4d881191cea548ec9, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &829645821
 Prefab:
   m_ObjectHideFlags: 0
@@ -2054,7 +2102,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 178.5
+  orthographic size: 133.33333
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2380,7 +2428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -272, y: -153.7}
+  m_AnchoredPosition: {x: 19, y: -97}
   m_SizeDelta: {x: 285, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1171189930
@@ -2431,7 +2479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 1
+    m_Mode: 2
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -3199,9 +3247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6490c99f225f5478e85473341837ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turret_manager: {fileID: 1992080701}
+  turret_manager: {fileID: 583946025}
   p1: {fileID: 505786937}
-  p2: {fileID: 0}
+  p2: {fileID: 799080035}
   menu_scene: main_menu
   game_scene: GameScene
   start_text: {fileID: 774512962}
@@ -3324,63 +3372,6 @@ Transform:
   m_Father: {fileID: 22350560}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1992080699
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1992080700}
-  - component: {fileID: 1992080701}
-  m_Layer: 0
-  m_Name: TurretManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1992080700
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1992080699}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1992080701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1992080699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c01d63889e4c0f4eb080a7cd8992dde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ideal_bullet_numbers: 10
-  bullet_cooldown: 5
-  dificulty_timer: 120
-  initial_bullets_NS: 2
-  initial_bullets_WE: 1
-  steady_bullets_NS: 2
-  steady_bullets_WE: 2
-  go_bullets_NS: 3
-  go_bullets_WE: 2
-  time_between_init_bullets: 2
-  time_to_steady: 3
-  time_to_go: 4
-  cooldown_divider: 2
-  ideal_bullet_mult: 2
-  max_power: 3
-  bullets:
-  - {fileID: 1732039238426842, guid: 818689e32e3e2f8459ab067a9bf1dbcb, type: 2}
 --- !u!1 &2082629161
 GameObject:
   m_ObjectHideFlags: 0
