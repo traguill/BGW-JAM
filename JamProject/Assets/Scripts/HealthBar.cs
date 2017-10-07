@@ -21,7 +21,12 @@ public class HealthBar : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        transform.position = new Vector3(player.transform.position.x + offset_x, player.transform.position.y + offset_y, transform.position.z);
+        int offset_final;
+        if (player.facing_right)
+            offset_final = offset_x;
+        else
+            offset_final = -offset_x;
+        transform.position = new Vector3(player.transform.position.x + offset_final, player.transform.position.y + offset_y, transform.position.z);
 
         bar.fillAmount = 0.24f + (0.75f - 0.24f) * (player.death_bar / 100.0f);
 	}
