@@ -409,7 +409,7 @@ public class Player : MonoBehaviour
             anim.SetBool("parry_end",true);
 
         int boost = smiling_at_max ? 1 : 0;
-        bullet_holded.max_velocity *= (hold_level + 1 + boost) - (hold_level) * 0.5f;
+        bullet_holded.max_velocity *= (hold_level + 1 + boost) - (hold_level) * 0.7f;
         bullet_holded.acceleration_step *= (hold_level + 1 + boost) - (hold_level) * 0.5f;
         bullet_holded.max_power += hold_level + 1 + boost;
         bullet_holded.Release(new Vector3(last_direction.x, last_direction.y, 0), holding_time,smiling_at_max);
