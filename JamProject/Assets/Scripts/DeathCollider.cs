@@ -24,12 +24,12 @@ public class DeathCollider : MonoBehaviour
     private void Update()
     {
         if (transform.parent.position.x < x)
-            transform.parent.position = new Vector3(x, transform.parent.position.y);
+            transform.parent.position = new Vector3(x-1, transform.parent.position.y);
         if (transform.parent.position.y > y)
-            transform.parent.position = new Vector3(transform.parent.position.x, y);
+            transform.parent.position = new Vector3(transform.parent.position.x, y-1);
         if (transform.parent.position.x > w)
-            transform.parent.position = new Vector3(w, transform.parent.position.y);
+            transform.parent.position = new Vector3(w-1, transform.parent.position.y);
         if (transform.parent.position.y < h)
-            transform.parent.position = new Vector3(transform.parent.position.x, h);
+            transform.parent.position = new Vector3(transform.parent.position.x, h-1);
     }
 }
