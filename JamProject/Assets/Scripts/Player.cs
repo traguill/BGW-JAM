@@ -74,6 +74,8 @@ public class Player : MonoBehaviour
     bool smiling_at_max = false;
     public int smile_level = 0;
 
+    public bool facing_right = true;
+
     Animator anim;
     Animator smile_anim;
     SpriteRenderer s_ren;
@@ -97,6 +99,11 @@ public class Player : MonoBehaviour
             if (t.CompareTag("Smile"))
                 smile_anim = t.GetComponent<Animator>();
         }
+
+        if (player_id == 2)
+            facing_right = false;
+        else
+            facing_right = true;
     }
 
 	
@@ -224,6 +231,10 @@ public class Player : MonoBehaviour
                 transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
         }
 
+        if (dx > 0)
+            facing_right = true;
+        if (dx < 0)
+            facing_right = false;
         
         last_velocity = velocity.magnitude;
     }
