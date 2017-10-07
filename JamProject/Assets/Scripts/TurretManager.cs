@@ -12,6 +12,7 @@ public enum TURRET_ZONE
 
 public enum START_STATE
 {
+    START = -1,
     READY = 0,
     STEADY = 1,
     GO = 2,
@@ -70,8 +71,7 @@ public class TurretManager : MonoBehaviour {
 
     private void Start()
     {
-        current_start_state = START_STATE.MATCH;
-        ChangeStartState(START_STATE.READY);
+        current_start_state = START_STATE.START;
     }
     // Update is called once per frame
     void Update ()
@@ -240,5 +240,16 @@ public class TurretManager : MonoBehaviour {
             last_zone = 0;
         else
             last_zone++;
+    }
+
+    public void GameStarts()
+    {
+        current_start_state = START_STATE.MATCH;
+        ChangeStartState(START_STATE.READY);
+    }
+
+    public void GameEnds()
+    {
+        current_start_state = START_STATE.START;
     }
 }

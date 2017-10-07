@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameModule : MonoBehaviour 
 {
+    public TurretManager turret_manager;
+    public Player p1;
+    public Player p2;
+
+    public string menu_scene;
+    public string game_scene;
+
     [Header("Start Text anim")]
     public Text start_text;
     public int max_font;
@@ -73,9 +81,7 @@ public class GameModule : MonoBehaviour
             {
                 start_text.gameObject.SetActive(false);
                 doing_intro = false;
-                //START!!!
-
-                EndGame(1);
+                EventStart();
             }
         }
     }
@@ -83,11 +89,9 @@ public class GameModule : MonoBehaviour
     public void EndGame(int looser_id)
     {
         game_over = true;
-        //Say winner and show retry/quit
 
-        //Tell everybody to fucking stop!
-        //winner stop->game is over
-        //Bullets end
+        turret_manager.GameEnds();
+
         int win = (looser_id == 1) ? 2 : 1;
         winner.text = "Player " + win + " wins!!!";
 
@@ -100,13 +104,18 @@ public class GameModule : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        Debug.Log("Changing scene to menu");
-        //scene change shit
+        SceneManager.LoadScene(menu_scene);
     }
 
     public void Rematch()
     {
-        //Reload the scene
-        Debug.Log("Reload the scene");
+        SceneManager.LoadScene(game_scene);
+    }
+
+    void EventStart()
+    {
+        turret_manager.GameStarts();
+        p1.GameStars();
+        p2.GameStars();
     }
 }

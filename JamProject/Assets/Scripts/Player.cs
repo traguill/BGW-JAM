@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     public string bullet_tag = "Bullet";
     public float time_scale = 1;
     public int player_id;
+
+    [Header("Links")]
+    public GameModule game_manager;
     
     //Axis names
     private string p1_x_axis = "P1_MOV_HOR";
@@ -37,6 +40,7 @@ public class Player : MonoBehaviour
     private bool is_parrying = false;
     private bool stunned = false;
     private bool is_recoiling = false;
+    private bool game_started = false;
 
     private float stunned_current_time = 0.0f;
 
@@ -92,6 +96,9 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+        if (game_started == false)
+            return;
+
         s_mask.sprite = s_ren.sprite;
         //Don't look down....
         List<int> to_remove = new List<int>();
@@ -408,6 +415,7 @@ public class Player : MonoBehaviour
             Debug.Log("Player: " + player_id + " is dead");
             death_bar = 100.0f;
             is_dead = true;
+            game_manager.EndGame(player_id);
             return;
         }
 
@@ -487,5 +495,10 @@ public class Player : MonoBehaviour
 
         AnimatorStateInfo currentBaseState2 = smile_anim.GetCurrentAnimatorStateInfo(0);
         smile_anim.Play(currentBaseState2.fullPathHash, -1, 0f);
+    }
+
+    public void GameStars()
+    {
+        game_started = true;
     }
 }
