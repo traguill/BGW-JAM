@@ -44,7 +44,7 @@ public class Turret : MonoBehaviour {
         ChangeAngle(angle);
         GameObject bullet_go_tmp = Instantiate(go, transform.position + transform.right, Quaternion.identity);
         Bullet bullet_tmp = bullet_go_tmp.GetComponent<Bullet>();
-        bullet_tmp.max_power = max_bullet_power;
+        bullet_tmp.power = max_bullet_power;
         bullet_tmp.SetDirection(direction);
     }
 

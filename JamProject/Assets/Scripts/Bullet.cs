@@ -5,10 +5,12 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
     //Public variables
+    [HideInInspector] public float current_velocity;
     public float max_velocity;
     public float max_acceleration;
     public float acceleration_step;
-    public int max_power = 1;
+    public float power = 1;
+    public float max_power = 7;
     public int ini_velocity = 2;
     public Color current_color = Color.white;
     float time_inside_wall = 0f;
@@ -24,6 +26,7 @@ public class Bullet : MonoBehaviour {
     SpriteRenderer s_ren;
     private void Start()
     {
+        current_velocity = max_velocity * (power / max_power);
         current_sprite = GetComponent<SpriteRenderer>();
         current_color = current_sprite.color;
         holding = false;
@@ -40,15 +43,15 @@ public class Bullet : MonoBehaviour {
         if (dead)
             return;
 
-        if(velocity.magnitude < max_velocity && holding == false)
+        if(velocity.magnitude < current_velocity && holding == false)
         {
             acceleration += acceleration_step * Time.deltaTime;
             if (acceleration > max_acceleration)
                 acceleration = max_acceleration;
             velocity += direction * acceleration * Time.deltaTime;
-            if(velocity.magnitude > max_velocity)
+            if(velocity.magnitude > current_velocity)
             {
-                velocity = direction * max_velocity;
+                velocity = direction * current_velocity;
             }
         }
         current_sprite.color = current_color;
@@ -61,10 +64,10 @@ public class Bullet : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Wall") && !dead)
         {
-            if (max_power <= current_rebounds)
+            if (power <= current_rebounds)
             {
                 //Kill Bullet
-                max_velocity = 0;
+                current_velocity = 0;
                 dead = true;
                 Destroy(gameObject, 0.5f);
             }
@@ -130,7 +133,7 @@ public class Bullet : MonoBehaviour {
     {
         anim.SetTrigger("PlayerCollision");
         dead = true;
-        max_velocity = 0;
+        current_velocity = 0;
         Destroy(gameObject, 0.5f);
     }
 }
