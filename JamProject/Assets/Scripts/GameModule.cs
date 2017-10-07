@@ -26,7 +26,8 @@ public class GameModule : MonoBehaviour
     float countdown_counter = 0.0f;
 
     [Header("GameOver Anim")]
-    public Text winner;
+    public Image winner_p1;
+    public Image winner_p2;
     public Button rematch;
     public Button quit;
 
@@ -38,7 +39,8 @@ public class GameModule : MonoBehaviour
         start_text.text = "3";
         start_text.fontSize = 0;
 
-        winner.gameObject.SetActive(false);
+        winner_p1.gameObject.SetActive(false);
+        winner_p2.gameObject.SetActive(false);
         rematch.gameObject.SetActive(false);
         quit.gameObject.SetActive(false);
 	}
@@ -92,10 +94,10 @@ public class GameModule : MonoBehaviour
 
         turret_manager.GameEnds();
 
-        int win = (looser_id == 1) ? 2 : 1;
-        winner.text = "Player " + win + " wins!!!";
-
-        winner.gameObject.SetActive(true);
+        if (looser_id == 1)
+            winner_p2.gameObject.SetActive(true);
+        else
+            winner_p1.gameObject.SetActive(true);
         rematch.gameObject.SetActive(true);
         quit.gameObject.SetActive(true);
 
