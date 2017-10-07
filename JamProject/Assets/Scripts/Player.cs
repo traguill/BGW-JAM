@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     [Header("Particles")]
     public GameObject die_part1;
     public GameObject die_part2;
-
+    public GameObject absorv_part;
 
     [Header("Links")]
     public GameModule game_manager;
@@ -298,6 +298,9 @@ public class Player : MonoBehaviour
             stunned_current_time = 0.0f;
             ResetAnimation();
             smile_anim.gameObject.SetActive(true);
+            if (smile_anim.GetInteger("SmileLevel") != smile_level)
+                smile_anim.SetInteger("SmileLevel", smile_level);
+            smile_anim.gameObject.SetActive(true);
             Debug.Log("Player" + player_id + " is no longer stunned");
         }
     }
@@ -328,6 +331,8 @@ public class Player : MonoBehaviour
                     success = b.Hold();
                     if (success)
                     {
+                        GameObject go = Instantiate(absorv_part, transform);
+                        Destroy(go, 1f);
                         bullet_holded = b;
                         b.gameObject.SetActive(false);
                         break;
@@ -425,9 +430,12 @@ public class Player : MonoBehaviour
         bullet_holded.acceleration_step *= (hold_level + 1 + boost) - (hold_level) * 0.5f;
         bullet_holded.Release(new Vector3(last_direction.x, last_direction.y, 0), holding_time,smiling_at_max);
         bullet_holded = null;
-    }
+        if (smile_anim.GetInteger("SmileLevel") != smile_level)
+            smile_anim.SetInteger("SmileLevel", smile_level);
 
-    public void Hit(Bullet bullet)
+}
+
+public void Hit(Bullet bullet)
     {
         Debug.Log("Player: " + player_id + " hit");
         death_bar += hit_dmg * (bullet.power +1);
@@ -543,7 +551,7 @@ public class Player : MonoBehaviour
 
     void CreateDieParticles()
     {
-        Instantiate(die_part1, transform);
+        Instantiate(die_part1,transform.position,die_part1.transform.rotation);
         Invoke("CreateDieParticles2", 0.5f);
     }
 
