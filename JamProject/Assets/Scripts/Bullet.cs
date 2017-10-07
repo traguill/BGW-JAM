@@ -20,8 +20,8 @@ public class Bullet : MonoBehaviour {
     private bool holding = false; //One of the players is holding the ball
     private bool dead = false;
     private float acceleration;
-    
-
+    Animator anim;
+    SpriteRenderer s_ren;
     private void Start()
     {
         current_sprite = GetComponent<SpriteRenderer>();
@@ -29,6 +29,8 @@ public class Bullet : MonoBehaviour {
         holding = false;
         TurretManager.current.AddBullet(this);
         dead = false;
+        anim = GetComponent<Animator>();
+        s_ren = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -61,11 +63,40 @@ public class Bullet : MonoBehaviour {
             if (max_power <= current_rebounds)
             {
                 //Kill Bullet
-                Destroy(gameObject);
+                dead = true;
+                ContactPoint2D contact = collision.contacts[0];
+                Vector3 dir = new Vector3(contact.point.x, contact.point.y) - transform.position;
+                if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+                {
+
+                    anim.SetTrigger("Disappear");
+                    s_ren.flipY = false;
+                    s_ren.flipX = dir.x > 0 ? false : true;
+                }
+                else
+                {
+                    s_ren.flipY = true;
+                    anim.SetTrigger("Disappear");
+                    s_ren.flipY = dir.y > 0 ? false : true;
+                }
+                Destroy(gameObject, 0.5f);
             }
             else
             {
                 ContactPoint2D contact = collision.contacts[0];
+                Vector3 dir = new Vector3(contact.point.x,contact.point.y) - transform.position;
+                if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+                {
+                    
+                    anim.SetTrigger("SplashSide");
+                    s_ren.flipX = dir.x > 0 ? false : true;
+                }
+                else
+                {
+                    anim.SetTrigger("SplashVert");
+                    s_ren.flipY = dir.y > 0 ? false : true;
+                }
+                    
                 velocity = Vector3.Reflect(velocity, contact.normal);
                 current_rebounds++;
             }
@@ -120,7 +151,7 @@ public class Bullet : MonoBehaviour {
         TurretManager.current.RemoveBullet(this);
     }
 
-    public void IWantToDie()
+    public void IWantToDie(Vector3 last_pos)
     {
         dead = true;
         Destroy(gameObject, 0.5f);

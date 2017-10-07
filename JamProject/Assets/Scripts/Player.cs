@@ -341,6 +341,16 @@ public class Player : MonoBehaviour
     }
     void SetBulletNewDirection()
     {
+        if (Mathf.Abs(last_direction.x) > 0)
+        {
+            bool rotate = (last_direction.x) > 0 ? false : true;
+
+            if (rotate)
+                transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
+            else
+                transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+        }
+
         Vector3 new_pos;
         new_pos.x = gameObject.transform.position.x + gameObject.GetComponent<CircleCollider2D>().offset.x + (last_direction.normalized.x * bullet_offset);
         new_pos.y = gameObject.transform.position.y + gameObject.GetComponent<CircleCollider2D>().offset.y + (last_direction.normalized.y * bullet_offset);
@@ -354,6 +364,7 @@ public class Player : MonoBehaviour
         int boost = smiling_at_max ? 1 : 0;
         bullet_holded.max_velocity *= (hold_level + 1 + boost) - (hold_level) * 0.5f;
         bullet_holded.acceleration_step *= (hold_level + 1 + boost) - (hold_level) * 0.5f;
+        bullet_holded.max_power += hold_level + 1 + boost;
         bullet_holded.Release(new Vector3(last_direction.x, last_direction.y, 0), holding_time,smiling_at_max);
         bullet_holded = null;
     }
@@ -369,7 +380,7 @@ public class Player : MonoBehaviour
         {
             bullets_in_range.Remove(bullet);
             //Say bullet to destroy. Mark bullet as death. Remove it after anim.
-            bullet.IWantToDie();
+            bullet.IWantToDie(transform.position);
         }
 
         if(death_bar >= 100.0f)
