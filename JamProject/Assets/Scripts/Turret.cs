@@ -9,12 +9,16 @@ public class Turret : MonoBehaviour {
     public float angle = 0;
     public int max_bullet_power = 5;
     public bool test_mode = false;
+    public float offset;
     Vector3 direction = Vector3.up;
     float current_time;
-    
+    Animator anim;
     private void Start()
     {
         ChangeAngle(angle);
+        anim = GetComponent<Animator>();
+        if (anim == null)
+            anim = transform.parent.GetComponent<Animator>();
     }
 
     private void Update()
@@ -36,6 +40,7 @@ public class Turret : MonoBehaviour {
 
     public void Shoot(GameObject go)
     {
+        anim.SetTrigger("Shoot");
         ChangeAngle(angle);
         GameObject bullet_go_tmp = Instantiate(go, transform.position + transform.right, Quaternion.identity);
         Bullet bullet_tmp = bullet_go_tmp.GetComponent<Bullet>();

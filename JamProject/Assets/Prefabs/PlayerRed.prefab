@@ -132,7 +132,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1940939451719982}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -55.8, y: 0, z: 0}
+  m_LocalPosition: {x: -55.8, y: -0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4039937125539922}
@@ -307,8 +307,9 @@ MonoBehaviour:
   bullet_tag: Bullet
   time_scale: 1
   player_id: 1
-  die_part1: {fileID: 1999125723676128, guid: e7fe09ee9d491a84d87bd9f3f698d4f1, type: 2}
-  die_part2: {fileID: 1764854345427528, guid: 098a76e140baa2147af7fb0d8050f15d, type: 2}
+  die_part1: {fileID: 1764854345427528, guid: 098a76e140baa2147af7fb0d8050f15d, type: 2}
+  die_part2: {fileID: 1999125723676128, guid: e7fe09ee9d491a84d87bd9f3f698d4f1, type: 2}
+  game_manager: {fileID: 0}
   bullet_offset: 20
   recoil_offset: 7
   smile_level: 0
