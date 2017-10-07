@@ -7,7 +7,7 @@ public class DeathCollider : MonoBehaviour
     public string bullet_tag;
     public Player player;
 
-    float x=-184;
+    float x=-175;
     float y= 96;
     float w=179;
     float h=-112;

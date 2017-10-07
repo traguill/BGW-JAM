@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4627618166124938}
   - component: {fileID: 212857737593117910}
   - component: {fileID: 95595086626679380}
+  - component: {fileID: 114308395679279510}
   m_Layer: 0
   m_Name: Smiles
   m_TagString: Smile
@@ -54,6 +55,7 @@ GameObject:
   - component: {fileID: 4258858786287546}
   - component: {fileID: 212359694035662456}
   - component: {fileID: 331396963931561130}
+  - component: {fileID: 114939892074339092}
   m_Layer: 0
   m_Name: white_sprite
   m_TagString: Untagged
@@ -314,6 +316,28 @@ MonoBehaviour:
   recoil_offset: 7
   smile_level: 0
   facing_right: 1
+--- !u!114 &114308395679279510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000830432346356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6da47dde0b32541996b4ed8f92dcfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114939892074339092
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1224325722775230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6da47dde0b32541996b4ed8f92dcfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212359694035662456
 SpriteRenderer:
   m_ObjectHideFlags: 1

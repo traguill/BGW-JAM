@@ -8,5 +8,7 @@ AnimatorOverrideController:
   m_Name: Turret_Side
   m_Controller: {fileID: 9100000, guid: 80fcb91b0f000ca46b3faefc8003dd4b, type: 2}
   m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 5fbd21457d6596448a33191b4a70e543, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a45e028fe7614d9478ca2b494939488f, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: eaf21bf592869924d8b3bfb8fcbe286e, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: d6cffd01dd29e7441b29ea8d2100dd34, type: 2}

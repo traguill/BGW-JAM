@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4039937125539922}
   - component: {fileID: 212716788286814844}
   - component: {fileID: 95995247540475432}
+  - component: {fileID: 114927133954804654}
   m_Layer: 0
   m_Name: Smiles
   m_TagString: Smile
@@ -285,6 +286,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet_tag: Bullet
   player: {fileID: 114981448034043338}
+--- !u!114 &114927133954804654
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1687499854601714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6da47dde0b32541996b4ed8f92dcfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114981448034043338
 MonoBehaviour:
   m_ObjectHideFlags: 1

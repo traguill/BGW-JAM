@@ -291,6 +291,8 @@ public class Player : MonoBehaviour
             stunned = false;
             is_recoiling = false;
             stunned_current_time = 0.0f;
+            ResetAnimation();
+            smile_anim.gameObject.SetActive(true);
             Debug.Log("Player" + player_id + " is no longer stunned");
         }
     }
@@ -351,6 +353,8 @@ public class Player : MonoBehaviour
     void ParryFail()
     {
         stunned = true;
+        smile_anim.gameObject.SetActive(false);
+        anim.SetTrigger("Fail");
         Debug.Log("Player " + player_id + " is stunned");
     }
 
