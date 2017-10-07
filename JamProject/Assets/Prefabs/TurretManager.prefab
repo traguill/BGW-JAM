@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1728914498103570}
+  m_IsPrefabParent: 1
+--- !u!1 &1728914498103570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4968473965786608}
+  - component: {fileID: 114267655742400206}
+  m_Layer: 0
+  m_Name: TurretManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4968473965786608
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1728914498103570}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114267655742400206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1728914498103570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c01d63889e4c0f4eb080a7cd8992dde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ideal_bullet_numbers: 3
+  bullet_cooldown: 5
+  dificulty_timer: 120
+  initial_bullets_NS: 1
+  initial_bullets_WE: 0
+  steady_bullets_NS: 1
+  steady_bullets_WE: 0
+  go_bullets_NS: 1
+  go_bullets_WE: 0
+  time_between_init_bullets: 2
+  time_to_steady: 3
+  time_to_go: 4
+  cooldown_divider: 2
+  ideal_bullet_mult: 2
+  max_power: 2
+  bullets:
+  - {fileID: 1732039238426842, guid: 818689e32e3e2f8459ab067a9bf1dbcb, type: 2}
