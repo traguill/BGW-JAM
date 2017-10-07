@@ -10,6 +10,7 @@ TagManager:
   - WestTurret
   - SouthTurret
   - Bullet
+  - Smile
   layers:
   - Default
   - TransparentFX

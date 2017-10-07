@@ -12,13 +12,13 @@ public class Player : MonoBehaviour
     public float recoil_duration;
     public float super_extasi_pc = 90.0f;
     public float max_holding_time = 2f;
-
+    
     [Header("Debugging")]
     public float death_bar = 0.0f;
     public string bullet_tag = "Bullet";
     public float time_scale = 1;
     public int player_id;
-
+    
     //Axis names
     private string p1_x_axis = "P1_MOV_HOR";
     private string p2_x_axis = "P2_MOV_HOR";
@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
     bool smiling_at_max = false;
 
     Animator anim;
+    Animator smile_anim;
     SpriteRenderer s_ren;
     SpriteMask s_mask;
     void Start()
@@ -77,6 +78,7 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         s_ren = GetComponent<SpriteRenderer>();
         s_mask = GetComponentInChildren<SpriteMask>();
+        smile_anim = GameObject.FindGameObjectWithTag("Smile").GetComponent<Animator>();
     }
 
 	
@@ -185,6 +187,7 @@ public class Player : MonoBehaviour
         if (anim == null)
             return;
         anim.SetFloat("velocity", velocity.magnitude);
+        smile_anim.SetFloat("velocity", velocity.magnitude);
 
         if (Mathf.Abs(dx * step) > 0)
         {
@@ -210,6 +213,7 @@ public class Player : MonoBehaviour
         if (anim == null)
             return;
         anim.SetFloat("velocity", velocity.magnitude);
+        smile_anim.SetFloat("velocity", velocity.magnitude);
 
         if (Mathf.Abs(dx * step) > 0)
         {
@@ -313,7 +317,8 @@ public class Player : MonoBehaviour
     void ParryStay()
     {
         float current_per = holding_time / max_holding_time;
-        if(current_per < 1f/3f )
+        anim.SetInteger("SmileLevel", hold_level);
+        if (current_per < 1f/3f )
         {
             hold_level = 0;
         }
@@ -335,6 +340,7 @@ public class Player : MonoBehaviour
             if (anim != null)
             {
                 anim.SetTrigger("parry");
+                
                 hold_level = 2;
             }
         }

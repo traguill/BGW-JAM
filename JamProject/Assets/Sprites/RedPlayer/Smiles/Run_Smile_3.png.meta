@@ -1,9 +1,17 @@
 fileFormatVersion: 2
 guid: 892184bcdd200084a8dcf565788167c3
-timeCreated: 1507337382
+timeCreated: 1507340923
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Run_Smile_3_0
+    21300002: Run_Smile_3_1
+    21300004: Run_Smile_3_2
+    21300006: Run_Smile_3_3
+    21300008: Run_Smile_3_4
+    21300010: Run_Smile_3_5
+    21300012: Run_Smile_3_6
+    21300014: Run_Smile_3_7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -45,7 +53,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -81,7 +89,119 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Run_Smile_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 31
+        width: 26
+        height: 31
+      alignment: 9
+      pivot: {x: 0.516, y: 0.209}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Run_Smile_3_1
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 31
+        width: 26
+        height: 31
+      alignment: 9
+      pivot: {x: 0.516, y: 0.209}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Run_Smile_3_2
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 31
+        width: 26
+        height: 31
+      alignment: 9
+      pivot: {x: 0.516, y: 0.209}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Run_Smile_3_3
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 31
+        width: 26
+        height: 31
+      alignment: 9
+      pivot: {x: 0.516, y: 0.209}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Run_Smile_3_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 26
+        height: 31
+      alignment: 9
+      pivot: {x: 0.516, y: 0.209}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Run_Smile_3_5
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 0
+        width: 26
+        height: 31
+      alignment: 9
+      pivot: {x: 0.516, y: 0.209}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Run_Smile_3_6
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 0
+        width: 26
+        height: 31
+      alignment: 9
+      pivot: {x: 0.516, y: 0.209}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Run_Smile_3_7
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 0
+        width: 26
+        height: 31
+      alignment: 9
+      pivot: {x: 0.516, y: 0.209}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 
