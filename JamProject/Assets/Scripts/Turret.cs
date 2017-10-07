@@ -19,7 +19,7 @@ public class Turret : MonoBehaviour {
 
     private void Update()
     {
-        if(test_mode)
+        if (test_mode)
             CheckShoot();
     }
 

@@ -153,16 +153,16 @@ public class TurretManager : MonoBehaviour {
         switch (last_zone)
         {
             case TURRET_ZONE.NORTH:
-                StartCoroutine(DelayShoot(north_turrets, 2));
+                StartCoroutine(DelayShoot(north_turrets, 1));
                 break;
             case TURRET_ZONE.EAST:
-                StartCoroutine(DelayShoot(east_turrets, 2));
+                StartCoroutine(DelayShoot(east_turrets, 1));
                 break;
             case TURRET_ZONE.SOUTH:
-                StartCoroutine(DelayShoot(south_turrets, 2));
+                StartCoroutine(DelayShoot(south_turrets, 1));
                 break;
             case TURRET_ZONE.WEST:
-                StartCoroutine(DelayShoot(west_turrets, 2));
+                StartCoroutine(DelayShoot(west_turrets, 1));
                 break;
         }
         current_time = 0;

@@ -18,7 +18,11 @@ public class Player : MonoBehaviour
     public string bullet_tag = "Bullet";
     public float time_scale = 1;
     public int player_id;
-    
+
+    [Header("Particles")]
+    public GameObject die_part1;
+    public GameObject die_part2;
+
     //Axis names
     private string p1_x_axis = "P1_MOV_HOR";
     private string p2_x_axis = "P2_MOV_HOR";
@@ -93,6 +97,7 @@ public class Player : MonoBehaviour
 	void Update () 
     {
         s_mask.sprite = s_ren.sprite;
+        s_ren.sortingOrder = (int)-transform.position.y;
         //Don't look down....
         List<int> to_remove = new List<int>();
         for (int i = 0; i < bullets_in_range.Count; ++i)
@@ -331,7 +336,7 @@ public class Player : MonoBehaviour
     void ParryStay()
     {
         float current_per = holding_time / max_holding_time;
-       
+        smile_anim.gameObject.SetActive(false);
         if (current_per < 1f/3f )
         {
             hold_level = 0;
@@ -361,6 +366,7 @@ public class Player : MonoBehaviour
     }
     void SetBulletNewDirection()
     {
+        smile_anim.gameObject.SetActive(true);
         if (Mathf.Abs(last_direction.x) > 0)
         {
             bool rotate = (last_direction.x) > 0 ? false : true;
@@ -407,7 +413,17 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Player: " + player_id + " is dead");
             death_bar = 100.0f;
+            if(!is_dead)
+            {
+                ResetAnimation();
+                anim.SetTrigger("Die");
+                Invoke("CreateDieParticles", 2f);
+                
+            }
+            
+            smile_anim.gameObject.SetActive(false);
             is_dead = true;
+
             return;
         }
 
@@ -487,5 +503,17 @@ public class Player : MonoBehaviour
 
         AnimatorStateInfo currentBaseState2 = smile_anim.GetCurrentAnimatorStateInfo(0);
         smile_anim.Play(currentBaseState2.fullPathHash, -1, 0f);
+    }
+
+    void CreateDieParticles()
+    {
+        Instantiate(die_part1, transform);
+        Invoke("CreateDieParticles2", 0.5f);
+    }
+
+    void CreateDieParticles2()
+    {
+        Instantiate(die_part2, transform.position + Vector3.up* 62.2f, Quaternion.identity);
+        
     }
 }
