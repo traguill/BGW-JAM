@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour 
 {
+    [HideInInspector]
+    public static AudioManager amg;
+
     public float laugh_hit_delay = 0.5f;
     public AudioSource absorb1;
     public AudioSource absorb2;
@@ -23,9 +26,9 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip[] laugh;
 
-    void Start()
+    void Awake()
     {
-        PlayPlayerDie(2, new Vector3(70, 0, 0));
+        amg = this;
     }
 
 

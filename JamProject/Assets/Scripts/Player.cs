@@ -173,6 +173,7 @@ public class Player : MonoBehaviour
             SetBulletNewDirection();
             Recoil();
             is_parrying = false;
+            AudioManager.amg.PlayShot(player_id, transform.position);
             return;
         }
 
@@ -264,7 +265,11 @@ public class Player : MonoBehaviour
             else
                 transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
         }
-           
+
+        if (dx > 0)
+            facing_right = true;
+        if (dx < 0)
+            facing_right = false;
     }
 
     void ParryP1()
@@ -334,6 +339,7 @@ public class Player : MonoBehaviour
                     is_parrying = true;
                     holding_time = 0.0f;
                     hold_level = 0;
+                    AudioManager.amg.PlayAbsorb(player_id, transform.position);
                     Debug.Log("Player: " + player_id + "is parrying");
                     if(anim != null)
                         anim.SetTrigger("parry");
@@ -451,9 +457,10 @@ public class Player : MonoBehaviour
             is_dead = true;
 
             game_manager.EndGame(player_id);
-
+            AudioManager.amg.PlayPlayerDie(player_id, transform.position);
             return;
         }
+        AudioManager.amg.PlayPlayerHit(player_id, transform.position);
 
         if(death_bar >= super_extasi_pc)
         {

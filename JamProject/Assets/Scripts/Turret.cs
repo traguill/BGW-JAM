@@ -13,12 +13,17 @@ public class Turret : MonoBehaviour {
     Vector3 direction = Vector3.up;
     float current_time;
     Animator anim;
+
+    AudioSource audio_src;
+
     private void Start()
     {
         ChangeAngle(angle);
         anim = GetComponent<Animator>();
         if (anim == null)
             anim = transform.parent.GetComponent<Animator>();
+
+        audio_src = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -46,6 +51,7 @@ public class Turret : MonoBehaviour {
         Bullet bullet_tmp = bullet_go_tmp.GetComponent<Bullet>();
         bullet_tmp.power = max_bullet_power;
         bullet_tmp.SetDirection(direction);
+        audio_src.Play();
     }
 
     void ChangeAngle(float new_angle)
