@@ -409,9 +409,10 @@ public class Player : MonoBehaviour
             anim.SetBool("parry_end",true);
 
         int boost = smiling_at_max ? 1 : 0;
-        bullet_holded.max_velocity *= (hold_level + 1 + boost) - (hold_level) * 0.7f;
+        bullet_holded.power += hold_level + 1 + boost;
+        bullet_holded.current_velocity = bullet_holded.max_velocity * (bullet_holded.power / bullet_holded.max_power);
+       // bullet_holded.current_velocity *= (hold_level + 1 + boost) - (hold_level) * 0.7f;
         bullet_holded.acceleration_step *= (hold_level + 1 + boost) - (hold_level) * 0.5f;
-        bullet_holded.max_power += hold_level + 1 + boost;
         bullet_holded.Release(new Vector3(last_direction.x, last_direction.y, 0), holding_time,smiling_at_max);
         bullet_holded = null;
     }
@@ -419,7 +420,7 @@ public class Player : MonoBehaviour
     public void Hit(Bullet bullet)
     {
         Debug.Log("Player: " + player_id + " hit");
-        death_bar += hit_dmg * (bullet.max_power +1);
+        death_bar += hit_dmg * (bullet.power +1);
         int last_level = smile_level;
         bool found = bullets_in_range.Contains(bullet);
 
