@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Credits : MonoBehaviour 
 {
+    public string menu_scene = "MainMenu";
     public CreditsClass[] members;
     public float fade_in_speed = 1.0f;
     public float fade_out_speed = 2.0f;
@@ -25,6 +27,11 @@ public class Credits : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+        if (Input.GetAxis("Cancel") > 0.0f)
+        {
+            GoToMenu();
+            return;
+        }
 	    switch(state)
         {
             case 0:
@@ -53,7 +60,7 @@ public class Credits : MonoBehaviour
                      state = 0;
                      members[mem_id].container.SetActive(false);
                      ++mem_id;
-                     if (mem_id > 5)
+                     if (mem_id == 5)
                      {
                          //Quit
                          GoToMenu();
@@ -77,6 +84,6 @@ public class Credits : MonoBehaviour
 
     void GoToMenu()
     {
-
+        SceneManager.LoadScene(menu_scene, LoadSceneMode.Single);
     }
 }

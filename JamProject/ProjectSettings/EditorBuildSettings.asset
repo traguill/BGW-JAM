@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/CredtisScene.unity
     guid: 3b2053a3a0786dc44bf51ed965a4f0ad
+  - enabled: 1
+    path: Assets/GameScene.unity
+    guid: 54ce250586b7c1b4899dd6fd5993d6b7
