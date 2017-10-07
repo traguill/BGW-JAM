@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameModule : MonoBehaviour 
 {
+    public TurretManager turret_manager;
+    public Player p1;
+    public Player p2;
+
+    public string menu_scene;
+    public string game_scene;
+
     [Header("Start Text anim")]
     public Text start_text;
     public int max_font;
@@ -18,7 +26,8 @@ public class GameModule : MonoBehaviour
     float countdown_counter = 0.0f;
 
     [Header("GameOver Anim")]
-    public Text winner;
+    public Image winner_p1;
+    public Image winner_p2;
     public Button rematch;
     public Button quit;
 
@@ -30,7 +39,8 @@ public class GameModule : MonoBehaviour
         start_text.text = "3";
         start_text.fontSize = 0;
 
-        winner.gameObject.SetActive(false);
+        winner_p1.gameObject.SetActive(false);
+        winner_p2.gameObject.SetActive(false);
         rematch.gameObject.SetActive(false);
         quit.gameObject.SetActive(false);
 	}
@@ -73,9 +83,7 @@ public class GameModule : MonoBehaviour
             {
                 start_text.gameObject.SetActive(false);
                 doing_intro = false;
-                //START!!!
-
-                EndGame(1);
+                EventStart();
             }
         }
     }
@@ -83,15 +91,13 @@ public class GameModule : MonoBehaviour
     public void EndGame(int looser_id)
     {
         game_over = true;
-        //Say winner and show retry/quit
 
-        //Tell everybody to fucking stop!
-        //winner stop->game is over
-        //Bullets end
-        int win = (looser_id == 1) ? 2 : 1;
-        winner.text = "Player " + win + " wins!!!";
+        turret_manager.GameEnds();
 
-        winner.gameObject.SetActive(true);
+        if (looser_id == 1)
+            winner_p2.gameObject.SetActive(true);
+        else
+            winner_p1.gameObject.SetActive(true);
         rematch.gameObject.SetActive(true);
         quit.gameObject.SetActive(true);
 
@@ -100,13 +106,18 @@ public class GameModule : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        Debug.Log("Changing scene to menu");
-        //scene change shit
+        SceneManager.LoadScene(menu_scene);
     }
 
     public void Rematch()
     {
-        //Reload the scene
-        Debug.Log("Reload the scene");
+        SceneManager.LoadScene(game_scene);
+    }
+
+    void EventStart()
+    {
+        turret_manager.GameStarts();
+        p1.GameStars();
+        p2.GameStars();
     }
 }

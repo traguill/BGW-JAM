@@ -19,9 +19,15 @@ public class Player : MonoBehaviour
     public float time_scale = 1;
     public int player_id;
 
+
     [Header("Particles")]
     public GameObject die_part1;
     public GameObject die_part2;
+
+
+    [Header("Links")]
+    public GameModule game_manager;
+    
 
     //Axis names
     private string p1_x_axis = "P1_MOV_HOR";
@@ -41,6 +47,7 @@ public class Player : MonoBehaviour
     private bool is_parrying = false;
     private bool stunned = false;
     private bool is_recoiling = false;
+    private bool game_started = false;
 
     private float stunned_current_time = 0.0f;
 
@@ -96,6 +103,9 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+        if (game_started == false)
+            return;
+
         s_mask.sprite = s_ren.sprite;
         s_ren.sortingOrder = (int)-transform.position.y;
         //Don't look down....
@@ -424,6 +434,8 @@ public class Player : MonoBehaviour
             smile_anim.gameObject.SetActive(false);
             is_dead = true;
 
+            game_manager.EndGame(player_id);
+
             return;
         }
 
@@ -505,6 +517,7 @@ public class Player : MonoBehaviour
         smile_anim.Play(currentBaseState2.fullPathHash, -1, 0f);
     }
 
+
     void CreateDieParticles()
     {
         Instantiate(die_part1, transform);
@@ -513,7 +526,11 @@ public class Player : MonoBehaviour
 
     void CreateDieParticles2()
     {
-        Instantiate(die_part2, transform.position + Vector3.up* 62.2f, Quaternion.identity);
-        
+        Instantiate(die_part2, transform.position + Vector3.up * 62.2f, Quaternion.identity);
+    }
+    public void GameStars()
+    {
+        game_started = true;
+
     }
 }
