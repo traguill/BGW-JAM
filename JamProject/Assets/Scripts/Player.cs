@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
 
     private List<Bullet> bullets_in_range; //TODO: Change transform for Bullet Class
 
+    float last_velocity = 0f;
+
     //Movement
     private float movement_speed = 0.0f;
 
@@ -188,7 +190,10 @@ public class Player : MonoBehaviour
         Vector3 velocity = new Vector3((dx * step), dy * step, 0);
 
         transform.position += velocity;
-
+        if ((last_velocity == 0 && velocity.magnitude > 0) || ((velocity.magnitude == 0) &&  last_velocity > 0))
+        {
+            ResetAnimation();
+        }
         if (anim == null)
             return;
         anim.SetFloat("velocity", velocity.magnitude);
@@ -203,6 +208,9 @@ public class Player : MonoBehaviour
             else
                 transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
         }
+
+        
+        last_velocity = velocity.magnitude;
     }
 
     void MovementP2()
@@ -217,6 +225,7 @@ public class Player : MonoBehaviour
 
         if (anim == null)
             return;
+
         anim.SetFloat("velocity", velocity.magnitude);
         smile_anim.SetFloat("velocity", velocity.magnitude);
 
@@ -469,5 +478,14 @@ public class Player : MonoBehaviour
         }
 
         s_mask.enabled = false;
+    }
+
+    void ResetAnimation()
+    {
+        AnimatorStateInfo currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
+        anim.Play(currentBaseState.fullPathHash, -1, 0f);
+
+        AnimatorStateInfo currentBaseState2 = smile_anim.GetCurrentAnimatorStateInfo(0);
+        smile_anim.Play(currentBaseState2.fullPathHash, -1, 0f);
     }
 }
