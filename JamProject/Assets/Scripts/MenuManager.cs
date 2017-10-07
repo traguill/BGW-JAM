@@ -32,6 +32,7 @@ public class MenuManager : MonoBehaviour {
     void Update()
     {
         GameObject selected = EventSystem.current.currentSelectedGameObject;
+        if(selected)
         if(selected != current_selected)
         {
             arrow.rectTransform.anchoredPosition = new Vector2(arrow.rectTransform.anchoredPosition.x, selected.transform.localPosition.y);
