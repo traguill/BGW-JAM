@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 4075860283128362}
   - component: {fileID: 212397741114699890}
   - component: {fileID: 331531901974411390}
+  - component: {fileID: 114437931525932190}
   m_Layer: 0
   m_Name: white_sprite
   m_TagString: Untagged
@@ -238,7 +239,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 2.08, y: 10.2}
   serializedVersion: 2
-  m_Radius: 30
+  m_Radius: 35
 --- !u!95 &95726329679947622
 Animator:
   serializedVersion: 3
@@ -286,6 +287,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet_tag: Bullet
   player: {fileID: 114981448034043338}
+--- !u!114 &114437931525932190
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1860056931451982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6da47dde0b32541996b4ed8f92dcfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114927133954804654
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -309,9 +321,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   base_movement_speed: 120
-  hit_dmg: 5
+  hit_dmg: 3
   max_mov_increase: 60
-  stunned_duration: 0.5
+  stunned_duration: 0.55
   recoil_duration: 0.2
   super_extasi_pc: 90
   max_holding_time: 2
@@ -321,6 +333,8 @@ MonoBehaviour:
   player_id: 1
   die_part1: {fileID: 1764854345427528, guid: 098a76e140baa2147af7fb0d8050f15d, type: 2}
   die_part2: {fileID: 1999125723676128, guid: e7fe09ee9d491a84d87bd9f3f698d4f1, type: 2}
+  absorv_part: {fileID: 1170277230317708, guid: 7324a0c795f5d13408237e112fd593fb,
+    type: 2}
   game_manager: {fileID: 0}
   bullet_offset: 20
   recoil_offset: 7
@@ -441,7 +455,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -999
   m_Sprite: {fileID: 21300000, guid: 42cd93b3e800f8d45af46dde44326c2e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.309}
   m_FlipX: 0
