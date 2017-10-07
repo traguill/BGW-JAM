@@ -30,6 +30,7 @@ public class GameModule : MonoBehaviour
     public Image winner_p2;
     public Button rematch;
     public Button quit;
+    public Image black;
 
 
 	// Use this for initialization
@@ -43,6 +44,7 @@ public class GameModule : MonoBehaviour
         winner_p2.gameObject.SetActive(false);
         rematch.gameObject.SetActive(false);
         quit.gameObject.SetActive(false);
+        black.gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -102,6 +104,8 @@ public class GameModule : MonoBehaviour
         quit.gameObject.SetActive(true);
 
         EventSystem.current.SetSelectedGameObject(rematch.gameObject);
+
+        black.gameObject.SetActive(true);
     }
 
     public void ReturnToMenu()
