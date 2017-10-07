@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
 
     //super cheto
     bool smiling_at_max = false;
+    public int smile_level = 0;
 
     Animator anim;
     Animator smile_anim;
@@ -78,7 +79,11 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         s_ren = GetComponent<SpriteRenderer>();
         s_mask = GetComponentInChildren<SpriteMask>();
-        smile_anim = GameObject.FindGameObjectWithTag("Smile").GetComponent<Animator>();
+        foreach(Transform t in transform)
+        {
+            if (t.CompareTag("Smile"))
+                smile_anim = t.GetComponent<Animator>();
+        }
     }
 
 	
@@ -317,7 +322,7 @@ public class Player : MonoBehaviour
     void ParryStay()
     {
         float current_per = holding_time / max_holding_time;
-        anim.SetInteger("SmileLevel", hold_level);
+       
         if (current_per < 1f/3f )
         {
             hold_level = 0;
@@ -379,7 +384,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Player: " + player_id + " hit");
         death_bar += hit_dmg * (bullet.max_power +1);
-
+        int last_level = smile_level;
         bool found = bullets_in_range.Contains(bullet);
 
         if (found)
@@ -396,10 +401,31 @@ public class Player : MonoBehaviour
             is_dead = true;
             return;
         }
+
         if(death_bar >= super_extasi_pc)
         {
             smiling_at_max = true;
+            smile_level = 3;
+
         }
+        else if(death_bar >= 60)
+        {
+            smile_level = 2;
+
+        }    
+        else if (death_bar >= 30)
+        {
+            smile_level = 1;
+            
+        }
+            
+        if(last_level != smile_level)
+        {
+            AnimatorStateInfo currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
+            anim.Play(currentBaseState.fullPathHash, -1, 0f);
+            smile_anim.SetInteger("SmileLevel", smile_level);
+        }
+        
         StartCoroutine(BlinkOnHit());
         movement_speed = base_movement_speed + max_mov_increase * (death_bar / 100.0f);
     }
